@@ -1,5 +1,3 @@
-Aqui está um exemplo de um README bonito e organizado que você pode usar como base para o seu repositório:
-
 ---
 
 # 🌐 Repositório - 4º Semestre | Sistemas para Internet
