@@ -17,25 +17,25 @@ function getActivityStatisticsByType(){
 }
 
 function setChartDonut(datalist){
-	var colors = ['#007bff','#28a745','#333333','#c3e6cb','#dc3545','#6c757d'];
-	
-	var donutOptions = {
-	  cutoutPercentage: 85, 
-	  legend: {position:'bottom', padding:5, labels: {pointStyle:'circle', usePointStyle:true}}
+	const colors = ['#007bff', '#28a745', '#333333', '#c3e6cb', '#dc3545', '#6c757d'];
+
+	const donutOptions = {
+		cutoutPercentage: 85,
+		legend: {position: 'bottom', padding: 5, labels: {pointStyle: 'circle', usePointStyle: true}}
 	};
-	
-	var chDonutData1 = {
-	    labels: datalist.map(data => data.type),
-	    datasets: [
-	      {
-	        backgroundColor: colors.slice(0,3),
-	        borderWidth: 0,
-	        data: datalist.map(data => data.count)
-	      }
-	    ]
+
+	const chDonutData1 = {
+		labels: datalist.map(data => data.type),
+		datasets: [
+			{
+				backgroundColor: colors.slice(0, 3),
+				borderWidth: 0,
+				data: datalist.map(data => data.count)
+			}
+		]
 	};
-	
-	var chDonut1 = document.getElementById("chDonut1");
+
+	const chDonut1 = document.getElementById("chDonut1");
 	if (chDonut1) {
 	  new Chart(chDonut1, {
 	      type: 'pie',

@@ -1,4 +1,4 @@
-package br.edu.ifsp.arq.tsi.arqweb1.ifitness.servlets;
+package br.edu.ifsp.ifitness.servlets;
 
 import java.io.IOException;
 import java.util.List;

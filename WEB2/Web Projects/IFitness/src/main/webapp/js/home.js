@@ -1,19 +1,19 @@
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
-})
+const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+	return new bootstrap.Tooltip(tooltipTriggerEl)
+});
 
-var myModal = document.getElementById('myModal');
-var bsModal = new bootstrap.Modal(document.getElementById('myModal'));
+const myModal = document.getElementById('myModal');
+const bsModal = new bootstrap.Modal(document.getElementById('myModal'));
 
 myModal.addEventListener('show.bs.modal', function (event) {
-  var button = event.relatedTarget;
-  var id = button.getAttribute('data-bs-id');
+	const button = event.relatedTarget;
+	const id = button.getAttribute('data-bs-id');
 
-  var modalTitle = myModal.querySelector('.modal-title')
-  var modalButton = myModal.querySelector('.modal-footer #delete');
+	const modalTitle = myModal.querySelector('.modal-title');
+	const modalButton = myModal.querySelector('.modal-footer #delete');
 
-  modalTitle.textContent = 'Exclusão da Atividade ' + id;
+	modalTitle.textContent = 'Exclusão da Atividade ' + id;
   modalButton.addEventListener('click', function(){
 		deleteActivity(button,id);
 		bsModal.hide();
@@ -22,7 +22,7 @@ myModal.addEventListener('show.bs.modal', function (event) {
 
 
 function deleteActivity(button, id){
-	var row = button.parentNode.parentNode.parentNode; // button->span->td->tr 
+	const row = button.parentNode.parentNode.parentNode; // button->span->td->tr
 	const url = "activityRegister?action=remove&activity-id="+id;
 
 	// Solicitação GET.
