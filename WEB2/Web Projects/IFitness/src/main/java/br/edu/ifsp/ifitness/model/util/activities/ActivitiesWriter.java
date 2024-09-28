@@ -56,7 +56,7 @@ public class ActivitiesWriter {
 						new LocalDateTypeAdapter())
 				.create();
 		List<Activity> activities = ActivitiesReader.read();
-		String path = "/media/Documentos/Fernando/ARQWEB1/WorkspaceEclipse/activities.json";
+		String path = Util.RESOURCES_PATH.getValue() + "/activities.json";
 		
 		int index = 0;
 		for(Activity a: activities) {
