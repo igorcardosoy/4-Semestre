@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import br.edu.ifsp.ifitness.model.util.Util;
 import com.google.gson.Gson;
@@ -15,13 +16,14 @@ import br.edu.ifsp.ifitness.model.util.LocalDateTypeAdapter;
 
 public class ActivitiesWriter {
 
+	private static final String path = Util.RESOURCES_PATH.getValue() + "/activities.json";
+
 	public static Boolean write(Activity activity) {
 		Gson gson = new GsonBuilder()
 				.registerTypeAdapter(LocalDate.class, 
 						new LocalDateTypeAdapter())
 				.create();
 		List<Activity> activities = ActivitiesReader.read();
-		String path = Util.RESOURCES_PATH.getValue() + "/activities.json";
 		
 		if(activities == null) {
 			// quando não tem nenhum objeto cadastrado
@@ -29,7 +31,7 @@ public class ActivitiesWriter {
 			activity.setId(1L);
 		}else {
 			// definir o id
-			activity.setId(activities.get(activities.size() -1).getId() + 1);
+			activity.setId(activities.getLast().getId() + 1);
 		}
 		
 		// adicionar na lista
@@ -56,11 +58,10 @@ public class ActivitiesWriter {
 						new LocalDateTypeAdapter())
 				.create();
 		List<Activity> activities = ActivitiesReader.read();
-		String path = Util.RESOURCES_PATH.getValue() + "/activities.json";
 		
 		int index = 0;
 		for(Activity a: activities) {
-			if(a.getId() == activity.getId()) {
+			if(Objects.equals(a.getId(), activity.getId())) {
 				activities.set(index, activity);
 			}
 			index++;
@@ -87,8 +88,7 @@ public class ActivitiesWriter {
 						new LocalDateTypeAdapter())
 				.create();
 		List<Activity> activities = ActivitiesReader.read();
-		String path = "/media/Documentos/Fernando/ARQWEB1/WorkspaceEclipse/activities.json";
-		
+
 		activities.remove(activity);
 		
 		// converte para o formato JSON
