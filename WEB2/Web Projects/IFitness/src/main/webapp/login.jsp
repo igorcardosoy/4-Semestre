@@ -32,7 +32,7 @@
 						role="alert">
 						E-mail e/ou senha inválidos.
 						<button type="button" class="btn-close" data-bs-dismiss="alert"
-							aria-label="Close"></button>https://github.com/natansalvadorligabo/adote.pet.git
+							aria-label="Close"></button>
 					</div>
 				</c:when>
 			</c:choose>
