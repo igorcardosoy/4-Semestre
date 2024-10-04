@@ -1,8 +1,7 @@
 package br.edu.ifsp.arq.tsi.arqweb2.ifitness.servlets;
 
-import java.io.IOException;
-import java.io.Serial;
-
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.User;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.users.UserLogin;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,8 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.User;
-import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.users.UserLogin;
+import java.io.IOException;
+import java.io.Serial;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet{

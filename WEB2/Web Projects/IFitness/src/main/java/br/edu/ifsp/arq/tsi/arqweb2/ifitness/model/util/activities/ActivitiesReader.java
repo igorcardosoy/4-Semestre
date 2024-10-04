@@ -1,21 +1,20 @@
 package br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.activities;
 
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.Activity;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.User;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.dto.ActivityByType;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.LocalDateTypeAdapter;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.Util;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
-
-import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.Util;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
-import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.Activity;
-import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.User;
-import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.dto.ActivityByType;
-import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.LocalDateTypeAdapter;
 
 public class ActivitiesReader {
 
@@ -73,7 +72,7 @@ public class ActivitiesReader {
 		  List<Activity> activities = readByUser(filter.getUser());
 
 		  if (activities == null) {
-		    return new LinkedList<>();
+		    return null;
 		  }
 		  
 		  if (filter.getType() != null) {
@@ -101,7 +100,7 @@ public class ActivitiesReader {
 		Map<String, Integer> activityCounts = new HashMap<>();
 
 		if (activities == null) {
-			return new ArrayList<>();
+			return null;
 		}
 
         for (Activity activity : activities) {

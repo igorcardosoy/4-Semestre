@@ -1,13 +1,12 @@
 package br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.activities;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.Activity;
 import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.Util;
 import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.Writer;
 
-import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.Activity;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class ActivitiesWriter {
 
@@ -22,6 +21,8 @@ public class ActivitiesWriter {
 		}else {
 			activity.setId(activities.getLast().getId() + 1);
 		}
+
+		activities.add(activity);
 
 		return Writer.write(activities, path);
 	}

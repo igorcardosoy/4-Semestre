@@ -1,20 +1,18 @@
 package br.edu.ifsp.arq.tsi.arqweb2.ifitness.servlets;
 
-import java.io.IOException;
-import java.io.Serial;
-import java.util.List;
-
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.User;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.dto.ActivityByType;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.activities.ActivitiesReader;
+import com.google.gson.Gson;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-
-import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.User;
-import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.dto.ActivityByType;
-import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.activities.ActivitiesReader;
+import java.io.IOException;
+import java.io.Serial;
+import java.util.List;
 
 @WebServlet("/activityStatistics")
 public class ActivityStatisticsServlet extends HttpServlet {

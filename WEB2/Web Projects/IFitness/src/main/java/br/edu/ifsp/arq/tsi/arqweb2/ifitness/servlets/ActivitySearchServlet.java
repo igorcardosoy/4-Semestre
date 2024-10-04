@@ -1,10 +1,10 @@
 package br.edu.ifsp.arq.tsi.arqweb2.ifitness.servlets;
 
-import java.io.IOException;
-import java.io.Serial;
-import java.time.LocalDate;
-import java.util.List;
-
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.Activity;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.ActivityType;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.User;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.activities.ActivitiesReader;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.activities.ActivityFilter;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,11 +13,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.Activity;
-import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.ActivityType;
-import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.User;
-import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.activities.ActivitiesReader;
-import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.activities.ActivityFilter;
+import java.io.IOException;
+import java.io.Serial;
+import java.time.LocalDate;
+import java.util.List;
 
 @WebServlet("/activitySearch")
 public class ActivitySearchServlet extends HttpServlet {

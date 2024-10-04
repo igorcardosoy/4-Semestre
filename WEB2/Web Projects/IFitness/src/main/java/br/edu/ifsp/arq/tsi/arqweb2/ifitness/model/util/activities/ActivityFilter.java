@@ -1,9 +1,9 @@
 package br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.activities;
 
-import java.time.LocalDate;
-
 import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.ActivityType;
 import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.User;
+
+import java.time.LocalDate;
 
 public class ActivityFilter {
 

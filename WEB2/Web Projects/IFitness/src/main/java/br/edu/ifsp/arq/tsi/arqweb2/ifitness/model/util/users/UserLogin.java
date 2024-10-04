@@ -1,8 +1,8 @@
 package br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.users;
 
-import java.util.List;
-
 import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.User;
+
+import java.util.List;
 
 public class UserLogin {
 	
