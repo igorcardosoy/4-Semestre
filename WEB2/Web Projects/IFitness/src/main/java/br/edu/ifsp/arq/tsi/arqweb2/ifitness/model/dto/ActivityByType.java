@@ -1,4 +1,4 @@
-package br.edu.ifsp.ifitness.model.dto;
+package br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.dto;
 
 public class ActivityByType {
 

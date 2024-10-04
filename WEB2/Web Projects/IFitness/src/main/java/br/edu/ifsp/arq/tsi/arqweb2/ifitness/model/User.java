@@ -1,4 +1,4 @@
-package br.edu.ifsp.ifitness.model;
+package br.edu.ifsp.arq.tsi.arqweb2.ifitness.model;
 
 import java.io.Serial;
 import java.io.Serializable;

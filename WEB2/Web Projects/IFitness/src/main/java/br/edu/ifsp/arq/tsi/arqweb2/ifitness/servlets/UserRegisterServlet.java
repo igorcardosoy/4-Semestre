@@ -1,8 +1,8 @@
-package br.edu.ifsp.ifitness.servlets;
+package br.edu.ifsp.arq.tsi.arqweb2.ifitness.servlets;
 
-import br.edu.ifsp.ifitness.model.Gender;
-import br.edu.ifsp.ifitness.model.User;
-import br.edu.ifsp.ifitness.model.util.users.UsersWriter;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.Gender;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.User;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.users.UsersWriter;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

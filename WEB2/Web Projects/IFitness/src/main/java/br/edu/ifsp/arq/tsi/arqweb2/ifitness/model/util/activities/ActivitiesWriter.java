@@ -1,4 +1,4 @@
-package br.edu.ifsp.ifitness.model.util.activities;
+package br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.activities;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import br.edu.ifsp.ifitness.model.util.Util;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.Util;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import br.edu.ifsp.ifitness.model.Activity;
-import br.edu.ifsp.ifitness.model.util.LocalDateTypeAdapter;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.Activity;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.LocalDateTypeAdapter;
 
 public class ActivitiesWriter {
 

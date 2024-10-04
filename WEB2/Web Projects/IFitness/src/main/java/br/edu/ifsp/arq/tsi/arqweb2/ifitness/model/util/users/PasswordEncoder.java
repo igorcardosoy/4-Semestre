@@ -1,4 +1,4 @@
-package br.edu.ifsp.ifitness.model.util.users;
+package br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.users;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

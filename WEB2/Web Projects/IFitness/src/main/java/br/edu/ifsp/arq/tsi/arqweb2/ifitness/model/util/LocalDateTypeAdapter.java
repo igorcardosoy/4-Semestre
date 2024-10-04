@@ -1,4 +1,4 @@
-package br.edu.ifsp.ifitness.model.util;
+package br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util;
 
 import java.lang.reflect.Type;
 import java.time.LocalDate;

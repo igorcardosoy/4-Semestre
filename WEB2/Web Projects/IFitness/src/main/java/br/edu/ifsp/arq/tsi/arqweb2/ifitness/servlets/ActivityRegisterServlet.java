@@ -1,4 +1,4 @@
-package br.edu.ifsp.ifitness.servlets;
+package br.edu.ifsp.arq.tsi.arqweb2.ifitness.servlets;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -6,11 +6,11 @@ import java.time.LocalDate;
 
 import com.google.gson.Gson;
 
-import br.edu.ifsp.ifitness.model.Activity;
-import br.edu.ifsp.ifitness.model.ActivityType;
-import br.edu.ifsp.ifitness.model.User;
-import br.edu.ifsp.ifitness.model.util.activities.ActivitiesReader;
-import br.edu.ifsp.ifitness.model.util.activities.ActivitiesWriter;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.Activity;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.ActivityType;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.User;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.activities.ActivitiesReader;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.activities.ActivitiesWriter;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;

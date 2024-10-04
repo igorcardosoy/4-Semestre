@@ -1,4 +1,4 @@
-package br.edu.ifsp.ifitness.servlets;
+package br.edu.ifsp.arq.tsi.arqweb2.ifitness.servlets;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,9 +11,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import br.edu.ifsp.ifitness.model.Activity;
-import br.edu.ifsp.ifitness.model.User;
-import br.edu.ifsp.ifitness.model.util.activities.ActivitiesReader;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.Activity;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.User;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.activities.ActivitiesReader;
 
 @WebServlet("/homeServlet")
 public class HomeServlet extends HttpServlet{

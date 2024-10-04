@@ -1,4 +1,4 @@
-package br.edu.ifsp.ifitness.servlets;
+package br.edu.ifsp.arq.tsi.arqweb2.ifitness.servlets;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,9 +12,9 @@ import jakarta.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-import br.edu.ifsp.ifitness.model.User;
-import br.edu.ifsp.ifitness.model.dto.ActivityByType;
-import br.edu.ifsp.ifitness.model.util.activities.ActivitiesReader;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.User;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.dto.ActivityByType;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.activities.ActivitiesReader;
 
 @WebServlet("/activityStatistics")
 public class ActivityStatisticsServlet extends HttpServlet {
