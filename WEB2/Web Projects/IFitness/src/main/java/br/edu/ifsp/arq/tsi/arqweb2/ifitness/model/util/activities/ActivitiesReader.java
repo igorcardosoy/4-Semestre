@@ -5,10 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.Util;
 import com.google.gson.Gson;
@@ -35,8 +32,9 @@ public class ActivitiesReader {
 			if(file.exists()) {
 				BufferedReader buffer = new BufferedReader(
 						new FileReader(path));
-				TypeToken<List<Activity>> type = 
-						new TypeToken<List<Activity>>() {};
+				TypeToken<List<Activity>> type =
+                        new TypeToken<>() {
+                        };
 				activities = gson.fromJson(buffer, type);
 				buffer.close();
 			}
@@ -52,7 +50,7 @@ public class ActivitiesReader {
 		if(activities != null) {
 			List<Activity> userActivities = new ArrayList<>();
 			for(Activity a: activities) {
-				if(a.getUser().getId() == user.getId()) {
+				if(Objects.equals(a.getUser().getId(), user.getId())) {
 					userActivities.add(a);
 				}
 			}
@@ -64,7 +62,7 @@ public class ActivitiesReader {
 	public static Activity findById(Long id) {
 		List<Activity> activities = read();
 		for(Activity a: activities) {
-			if(a.getId() == id) {
+			if(Objects.equals(a.getId(), id)) {
 				return a;
 			}
 		}
@@ -73,6 +71,10 @@ public class ActivitiesReader {
 	
 	public static List<Activity> getActivitiesByFilter(ActivityFilter filter) {
 		  List<Activity> activities = readByUser(filter.getUser());
+
+		  if (activities == null) {
+		    return new LinkedList<>();
+		  }
 		  
 		  if (filter.getType() != null) {
 		    activities = activities.stream().filter(
@@ -98,14 +100,18 @@ public class ActivitiesReader {
 		List<Activity> activities = readByUser(user); 
 		Map<String, Integer> activityCounts = new HashMap<>();
 
+		if (activities == null) {
+			return new ArrayList<>();
+		}
+
         for (Activity activity : activities) {
             String activityType = activity.getType().getDescription();
             if (!activityCounts.containsKey(activityType)) {
                 activityCounts.put(activityType, 0);
             }
             int currentCount = activityCounts.get(activityType);
-            activityCounts.put(activityType, currentCount + 1);
-        }
+			activityCounts.put(activityType, currentCount + 1);
+		}
 
         List<ActivityByType> activityTypeList = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : activityCounts.entrySet()) {

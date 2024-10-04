@@ -35,7 +35,7 @@ public class UsersWriter {
 				}
 			}
 			// definir o id do novo usuário
-			user.setId(users.get(users.size() -1).getId() + 1);
+			user.setId(users.getLast().getId() + 1);
 		}
 		// criptografar a senha
 		user.setPassword(PasswordEncoder.encode(user.getPassword()));

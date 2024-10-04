@@ -1,6 +1,7 @@
 package br.edu.ifsp.arq.tsi.arqweb2.ifitness.servlets;
 
 import java.io.IOException;
+import java.io.Serial;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -16,6 +17,7 @@ import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.users.UserLogin;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet{
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 	
 	public LoginServlet() {

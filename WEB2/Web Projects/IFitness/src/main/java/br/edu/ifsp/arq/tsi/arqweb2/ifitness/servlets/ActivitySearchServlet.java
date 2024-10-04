@@ -1,6 +1,7 @@
 package br.edu.ifsp.arq.tsi.arqweb2.ifitness.servlets;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.activities.ActivityFilter
 @WebServlet("/activitySearch")
 public class ActivitySearchServlet extends HttpServlet {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	public ActivitySearchServlet() {
@@ -53,7 +55,7 @@ public class ActivitySearchServlet extends HttpServlet {
 		filter.setType(activityType);
 		filter.setInitialDate(initialDate);
 		filter.setFinalDate(finalDate);
-		List<Activity> userActivities = null;
+		List<Activity> userActivities;
 		userActivities = ActivitiesReader.getActivitiesByFilter(filter);
 		req.setAttribute("userActivities", userActivities);
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/home.jsp");

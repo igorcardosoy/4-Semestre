@@ -1,6 +1,7 @@
 package br.edu.ifsp.arq.tsi.arqweb2.ifitness.servlets;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
@@ -18,6 +19,7 @@ import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.activities.ActivitiesRead
 @WebServlet("/homeServlet")
 public class HomeServlet extends HttpServlet{
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 	
 	public HomeServlet() {

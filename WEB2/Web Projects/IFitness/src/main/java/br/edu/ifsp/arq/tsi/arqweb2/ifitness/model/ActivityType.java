@@ -6,8 +6,8 @@ public enum ActivityType {
 	CICLISMO("Ciclismo"),
 	CORRIDA("Corrida"),
 	NATACAO("Natação");
-	
-	private String description;
+
+	private final String description;
 	
 	ActivityType(String description) {
 		this.description = description;

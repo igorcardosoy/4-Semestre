@@ -11,12 +11,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.time.LocalDate;
 
 
 @WebServlet("/userRegister")
 public class UserRegisterServlet extends HttpServlet {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 	
 	public UserRegisterServlet() {
@@ -40,13 +42,13 @@ public class UserRegisterServlet extends HttpServlet {
 		user.setDateOfBirth(LocalDate.parse(dateOfBirth));
 		user.setGender(Gender.valueOf(gender));
 		
-		RequestDispatcher dispatcher = null;
+		RequestDispatcher dispatcher;
 		
 		// salvar o novo usuário
 		if(UsersWriter.write(user)) {
 			req.setAttribute("result", "registered");
 			dispatcher = req.getRequestDispatcher("/login.jsp");
-		}else {
+		} else {
 			req.setAttribute("result", "notRegistered");
 			dispatcher = req.getRequestDispatcher("user-register.jsp");
 		}

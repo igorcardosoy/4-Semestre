@@ -1,6 +1,7 @@
 package br.edu.ifsp.arq.tsi.arqweb2.ifitness.servlets;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.time.LocalDate;
 
 
@@ -23,6 +24,7 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet("/activityRegister")
 public class ActivityRegisterServlet extends HttpServlet {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	public ActivityRegisterServlet() {
@@ -31,7 +33,7 @@ public class ActivityRegisterServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Long id = Long.parseLong(req.getParameter("id"));
+		long id = Long.parseLong(req.getParameter("id"));
 		ActivityType type = ActivityType.valueOf(req.getParameter("type"));
 		LocalDate date = LocalDate.parse(req.getParameter("date"));
 		Double distance = Double.parseDouble(req.getParameter("distance"));
@@ -66,10 +68,10 @@ public class ActivityRegisterServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getParameter("action");
 		Long id = Long.parseLong(req.getParameter("activity-id"));
-		String url = null;
+		String url;
 
 		Activity activity = ActivitiesReader.findById(id);
-		RequestDispatcher dispatcher = null;
+		RequestDispatcher dispatcher;
 		if(activity != null) {
 			if(action.equals("update")) {
 				req.setAttribute("activity", activity);
@@ -82,7 +84,7 @@ public class ActivityRegisterServlet extends HttpServlet {
 				Gson gson = new Gson();
 				String json = gson.toJson(response);
 				resp.setContentType("application/json");
-				resp.getWriter().write(json.toString());
+				resp.getWriter().write(json);
 			}
 		}else {
 			url = "/homeServlet";

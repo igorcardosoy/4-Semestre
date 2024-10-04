@@ -7,9 +7,9 @@ public enum Gender {
 	OUTRO("Outro"),
 	PREFIRO_NAO_DIZER("Prefiro não dizer");
 	
-	private String description;
+	private final String description;
 	
-	private Gender(String description) {
+	Gender(String description) {
 		this.description = description;
 	}
 	
