@@ -1,8 +1,6 @@
 package br.edu.ifsp.arq.tsi.arqweb2.ifitness.servlets;
 
-import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.Activity;
 import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.User;
-import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.activities.ActivitiesReader;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,7 +11,6 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.Serial;
-import java.util.List;
 
 @WebServlet("/homeServlet")
 public class HomeServlet extends HttpServlet{
@@ -27,17 +24,24 @@ public class HomeServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String url;
 		HttpSession session = req.getSession(false);
-		
 		User user = (User)session.getAttribute("user");
-		// listar atividades do usuário logado
-		List<Activity> userActivities = 
-				ActivitiesReader.readByUser(user);
-		req.setAttribute("userActivities", userActivities);
-		url = "/home.jsp";
-		
-		RequestDispatcher dispatcher = req.getRequestDispatcher(url);
+
+		RequestDispatcher dispatcher;
+
+		if(user != null) {
+			// buscar a lista de atividades do usuário logado
+			/*
+			 * List<Activity> userActivities = ActivitiesReader.readByUser(user);
+			 * req.setAttribute("userActivities", userActivities);
+			 */
+			req.setAttribute("name", user.getName());
+			dispatcher = req.getRequestDispatcher("/home.jsp");
+		}else {
+			req.setAttribute("result", "loginError");
+			dispatcher = req.getRequestDispatcher("/login.jsp");
+		}
+
 		dispatcher.forward(req, resp);
 	}
 	

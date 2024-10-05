@@ -2,7 +2,9 @@ package br.edu.ifsp.arq.tsi.arqweb2.ifitness.servlets;
 
 import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.Gender;
 import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.User;
-import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.users.UsersWriter;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.dao.UserDao;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.DataSourceSearcher;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.PasswordEncoder;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -38,14 +40,16 @@ public class UserRegisterServlet extends HttpServlet {
 		User user = new User();
 		user.setName(name);
 		user.setEmail(email);
-		user.setPassword(password);
+		user.setPassword(PasswordEncoder.encode(password));
 		user.setDateOfBirth(LocalDate.parse(dateOfBirth));
 		user.setGender(Gender.valueOf(gender));
 		
 		RequestDispatcher dispatcher;
+
+		UserDao userDao = new UserDao(DataSourceSearcher.getInstance().getDataSource());
 		
 		// salvar o novo usuário
-		if(UsersWriter.write(user)) {
+		if(userDao.save(user)) {
 			req.setAttribute("result", "registered");
 			dispatcher = req.getRequestDispatcher("/login.jsp");
 		} else {

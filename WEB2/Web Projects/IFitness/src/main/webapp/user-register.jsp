@@ -53,13 +53,13 @@
 				<div class="mb-2">
 					<label for="password">Senha*</label> <input type="password"
 						name="password" id="password" class="form-control" minlength="6"
-						maxlength="12" required="required"> <span id="2"></span>
+						maxlength="25" required="required"> <span id="2"></span>
 				</div>
 
 				<div class="mb-2">
 					<label for="confirmPassword">Confirmação de Senha*</label> <input
 						type="password" name="confirmPassword" id="confirmPassword"
-						class="form-control" minlength="6" maxlength="12"
+						class="form-control" minlength="6" maxlength="25"
 						required="required"> <span id="3"></span>
 				</div>
 
