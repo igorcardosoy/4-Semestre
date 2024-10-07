@@ -8,8 +8,8 @@ public class PasswordEncoder {
 	public static String encode(String password) {
 		String passwordEncrypted;
 		try {
-			MessageDigest md5 = MessageDigest.getInstance("MD5");
-			byte[] bytes = md5.digest(password.getBytes());
+			MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+			byte[] bytes = messageDigest.digest(password.getBytes());
 			StringBuilder builder = new StringBuilder();
 			for(byte b: bytes) {
 				builder.append(String.format("%02X", b));
