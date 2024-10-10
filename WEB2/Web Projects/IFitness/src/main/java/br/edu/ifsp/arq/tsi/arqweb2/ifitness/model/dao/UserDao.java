@@ -63,8 +63,7 @@ public class UserDao {
             return false;
         }
 
-        String sql = "insert into USER (name, email, password, "
-                + "birth_date, gender, active) values (?,?,?,?,?,?)";
+        String sql = "insert into USER (name, email, password, " + "birth_date, gender, active) values (?,?,?,?,?,?)";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, user.getName());
