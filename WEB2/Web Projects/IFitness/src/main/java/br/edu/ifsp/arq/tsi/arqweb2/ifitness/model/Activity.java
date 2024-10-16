@@ -14,7 +14,7 @@ public class Activity implements Serializable {
 	private ActivityType type;
 	private LocalDate date;
 	private Double distance;
-	private Double duration;
+	private Integer duration;
 	private User user;
 
 	public Long getId() {
@@ -49,11 +49,11 @@ public class Activity implements Serializable {
 		this.distance = distance;
 	}
 
-	public Double getDuration() {
+	public Integer getDuration() {
 		return duration;
 	}
 
-	public void setDuration(Double duration) {
+	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
 	

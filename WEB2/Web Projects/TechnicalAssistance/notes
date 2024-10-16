@@ -1,0 +1,4 @@
+create order -> select customer -> select payment method
+view orders -> orders page -> change order status
+view orders -> orders page -> edit order
+home -> customers -> edit customer -> modal

@@ -2,17 +2,19 @@ package br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model;
 
 public class Customer {
 
-    private int code;
+    private Integer code;
     private String name;
     private String email;
     private String phone;
-    private long cpf;
+    private Long cpf;
+    private Boolean active;
+    private Address address;
 
-    public int getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 
@@ -40,11 +42,35 @@ public class Customer {
         this.phone = phone;
     }
 
-    public long getCpf() {
+    public Long getCpf() {
         return cpf;
     }
 
-    public void setCpf(long cpf) {
+    public void setCpf(Long cpf) {
         this.cpf = cpf;
+    }
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

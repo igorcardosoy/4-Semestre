@@ -1,13 +1,27 @@
 CREATE DATABASE IFITNESS;
 
+USE IFITNESS;
+
 CREATE TABLE USER (
-                      id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
-                      name VARCHAR(50) NOT NULL,
-                      email VARCHAR(50) NOT NULL,
-                      password VARCHAR(150) NOT NULL,
-                      birth_date DATE NOT NULL,
-                      gender VARCHAR(30) NOT NULL,
-                      active BOOLEAN NOT NULL
+      id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+      name VARCHAR(50) NOT NULL,
+      email VARCHAR(50) NOT NULL,
+      password VARCHAR(150) NOT NULL,
+      birth_date DATE NOT NULL,
+      gender VARCHAR(30) NOT NULL,
+      active BOOLEAN NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 SELECT * FROM USER;
+
+CREATE TABLE ACTIVITY (
+      id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+      type VARCHAR(20) NOT NULL,
+      activity_date DATE NOT NULL,
+      distance DOUBLE NOT NULL,
+      duration INT NOT NULL,
+      user_id BIGINT(20) NOT NULL,
+      FOREIGN KEY (user_id) REFERENCES USER(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+SELECT * FROM ACTIVITY;

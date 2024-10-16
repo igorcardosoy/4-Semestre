@@ -1,6 +1,9 @@
 package br.edu.ifsp.arq.tsi.arqweb2.ifitness.servlets;
 
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.Activity;
 import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.User;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.dao.ActivityDao;
+import br.edu.ifsp.arq.tsi.arqweb2.ifitness.model.util.DataSourceSearcher;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.Serial;
+import java.util.List;
 
 @WebServlet("/homeServlet")
 public class HomeServlet extends HttpServlet{
@@ -30,12 +34,12 @@ public class HomeServlet extends HttpServlet{
 		RequestDispatcher dispatcher;
 
 		if(user != null) {
-			// buscar a lista de atividades do usuário logado
-			/*
-			 * List<Activity> userActivities = ActivitiesReader.readByUser(user);
-			 * req.setAttribute("userActivities", userActivities);
-			 */
+			ActivityDao activityDao = new ActivityDao(DataSourceSearcher.getInstance().getDataSource());
+			List<Activity> userActivities = activityDao.getActivitiesByUser(user);
+
+			req.setAttribute("userActivities", userActivities);
 			req.setAttribute("name", user.getName());
+
 			dispatcher = req.getRequestDispatcher("/home.jsp");
 		}else {
 			req.setAttribute("result", "loginError");

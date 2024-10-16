@@ -1,6 +1,8 @@
 package br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets;
 
+import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.Address;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.Customer;
+import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.dao.AddressDao;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.dao.CustomerDao;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.util.DataSourceSearcher;
 import jakarta.servlet.ServletException;
@@ -11,19 +13,22 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/register-customer")
+import static br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets.Util.dispatcherForward;
+
+@WebServlet("/home/register/customer")
 public class RegisterCustomerServlet extends HttpServlet {
+
+    private static final String url = "/pages/home/register/customer/page.jsp";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("./pages/register-customer/register-customer.jsp").forward(req, resp);
+        req.getRequestDispatcher("/pages/home/register/customer/page.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        int code;
-        long cpf;
-        String name, email, phone;
+        int code; long cpf; String name, email, phone; // Dados do cliente
+        int zipcode; String number, street, neighborhood, city, state, complement; // Dados do endereço do cliente
 
         try{
             code = Integer.parseInt(req.getParameter("code"));
@@ -31,10 +36,27 @@ public class RegisterCustomerServlet extends HttpServlet {
             email = req.getParameter("email");
             phone = req.getParameter("phone");
             cpf = Long.parseLong(req.getParameter("cpf"));
+            number = req.getParameter("number");
+            street = req.getParameter("street");
+            neighborhood = req.getParameter("neighborhood");
+            city = req.getParameter("city");
+            state = req.getParameter("state");
+            zipcode = Integer.parseInt(req.getParameter("zipcode"));
+            complement = req.getParameter("complement");
         } catch (NumberFormatException e) {
-            dispatcherForward(req, resp, "error");
+            dispatcherForward(req, resp, url,"error");
             return;
         }
+
+        Address address = new Address();
+
+        address.setNumber(number);
+        address.setStreet(street);
+        address.setNeighborhood(neighborhood);
+        address.setCity(city);
+        address.setState(state);
+        address.setZipCode(Integer.toString(zipcode));
+        address.setComplement(complement);
 
         Customer customer = new Customer();
 
@@ -43,19 +65,24 @@ public class RegisterCustomerServlet extends HttpServlet {
         customer.setEmail(email);
         customer.setPhone(phone);
         customer.setCpf(cpf);
+        customer.setAddress(address);
 
         CustomerDao customerDao = new CustomerDao(DataSourceSearcher.getInstance().getDataSource());
+        AddressDao addressDao = new AddressDao(DataSourceSearcher.getInstance().getDataSource());
 
-        if (!customerDao.save(customer)) {
-            dispatcherForward(req, resp, "error");
+        address.setId(addressDao.getLastId() + 1L);
+
+        if (!addressDao.save(address)) {
+            dispatcherForward(req, resp, url,"error");
             return;
         }
 
-        dispatcherForward(req, resp, "success");
+        if (!customerDao.save(customer)) {
+            dispatcherForward(req, resp, url,"error");
+            return;
+        }
+
+        dispatcherForward(req, resp, url,"success");
     }
 
-    private void dispatcherForward(HttpServletRequest req, HttpServletResponse resp, String message) throws ServletException, IOException {
-        req.setAttribute("result", message);
-        req.getRequestDispatcher("./pages/register-customer/register-customer.jsp").forward(req, resp);
-    }
 }
