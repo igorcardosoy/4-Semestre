@@ -1,4 +1,4 @@
-package br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets;
+package br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets.register;
 
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.Status;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.dao.StatusDao;
@@ -27,8 +27,10 @@ public class RegisterStatusServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name;
+        long code;
 
         try {
+            code = Integer.parseInt(req.getParameter("code"));
             name = req.getParameter("name");
         } catch (NumberFormatException e) {
             dispatcherForward(req, resp, url, "error");
@@ -38,7 +40,9 @@ public class RegisterStatusServlet extends HttpServlet {
         DataSource dataSource = DataSourceSearcher.getInstance().getDataSource();
         StatusDao statusDao = new StatusDao(dataSource);
 
-        Status status = Status.valueOf(name);
+        Status status = new Status();
+        status.setCode(code);
+        status.setName(name);
 
         if (!statusDao.save(status)) {
             dispatcherForward(req, resp, url, "error");

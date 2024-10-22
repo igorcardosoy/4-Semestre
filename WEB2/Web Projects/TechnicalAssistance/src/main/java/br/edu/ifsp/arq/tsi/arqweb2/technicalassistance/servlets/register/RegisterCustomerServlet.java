@@ -1,4 +1,4 @@
-package br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets;
+package br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets.register;
 
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.Address;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.Customer;
@@ -22,12 +22,13 @@ public class RegisterCustomerServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("action", "register");
         req.getRequestDispatcher("/pages/home/register/customer/page.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        int code; long cpf; String name, email, phone; // Dados do cliente
+        int code; String cpf; String name, email, phone; // Dados do cliente
         int zipcode; String number, street, neighborhood, city, state, complement; // Dados do endereço do cliente
 
         try{
@@ -35,7 +36,7 @@ public class RegisterCustomerServlet extends HttpServlet {
             name = req.getParameter("name");
             email = req.getParameter("email");
             phone = req.getParameter("phone");
-            cpf = Long.parseLong(req.getParameter("cpf"));
+            cpf = req.getParameter("cpf");
             number = req.getParameter("number");
             street = req.getParameter("street");
             neighborhood = req.getParameter("neighborhood");
@@ -84,5 +85,4 @@ public class RegisterCustomerServlet extends HttpServlet {
 
         dispatcherForward(req, resp, url,"success");
     }
-
 }

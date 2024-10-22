@@ -66,6 +66,8 @@ async function searchCep(){
         let response = await fetch(url);
         let data = await response.json();
 
+        if (data.erro || data.logradouro == undefined) return;
+
         street.value = data.logradouro;
         neighborhood.value = data.bairro;
         city.value = data.localidade;

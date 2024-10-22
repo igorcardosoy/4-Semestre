@@ -1,4 +1,4 @@
-package br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets;
+package br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets.register;
 
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.PaymentMethod;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.dao.PaymentMethodDao;
@@ -20,6 +20,7 @@ public class RegisterPaymentMethodServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("action", "register");
         req.getRequestDispatcher(url).forward(req, resp);
     }
 

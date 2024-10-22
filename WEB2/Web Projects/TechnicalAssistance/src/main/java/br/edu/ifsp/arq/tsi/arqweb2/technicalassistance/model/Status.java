@@ -1,18 +1,22 @@
 package br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model;
 
-public enum Status {
-    IN_APROVAL("Em Apravação"),
-    IN_PROGRESS("Em Progresso"),
-    FINISHED("Finalizado"),
-    APPROVED("Aprovado");
+public class Status {
+        private Long code;
+        private String name;
 
-    private final String description;
+        public Long getCode() {
+            return code;
+        }
 
-    Status(String description) {
-        this.description = description;
-    }
+        public void setCode(Long code) {
+            this.code = code;
+        }
 
-    public String getDescription() {
-        return description;
-    }
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
 }

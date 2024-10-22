@@ -19,14 +19,16 @@ public class StatusDao {
         this.dataSource = dataSource;
     }
 
-    public Optional<Status> getStatusdByName(String name) {
+    public Optional<Status> getStatusdByCode(Long code) {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT * FROM ORDER_STATUS WHERE name = ?";
+            String sql = "SELECT * FROM ORDER_STATUS WHERE code = ?";
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setString(1, name);
+                ps.setLong(1, code);
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
-                        Status status = Status.valueOf(rs.getString("name"));
+                        Status status = new Status();
+                        status.setCode(rs.getLong("code"));
+                        status.setName(rs.getString("name"));
                         return Optional.of(status);
                     }
                 }
@@ -38,18 +40,20 @@ public class StatusDao {
     }
 
     public Boolean save(Status status) throws RuntimeException {
-        Optional<Status> optional = getStatusdByName(status.name());
+        Optional<Status> optional = getStatusdByCode(status.getCode());
         if (optional.isPresent()) {
             return false;
         }
 
-        String sql = "INSERT INTO ORDER_STATUS (name) VALUES (?)";
+        String sql = "INSERT INTO ORDER_STATUS (code, name) VALUES (?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, status.name());
+            ps.setLong(1, status.getCode());
+            ps.setString(2, status.getName());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return false;
         }
 
         return true;
@@ -62,13 +66,53 @@ public class StatusDao {
                  ResultSet rs = ps.executeQuery()) {
                 List<Status> statuses = new LinkedList<>();
                 while (rs.next()) {
-                    Status status = Status.valueOf(rs.getString("name"));
+                    Status status = new Status();
+                    status.setCode(rs.getLong("code"));
+                    status.setName(rs.getString("name"));
                     statuses.add(status);
                 }
                 return statuses;
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return List.of();
         }
+    }
+
+    public Boolean update(Status status) {
+        Optional<Status> optional = getStatusdByCode(status.getCode());
+        if (optional.isEmpty()) {
+            return false;
+        }
+
+        String sql = "UPDATE ORDER_STATUS SET name = ? WHERE code = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, status.getName());
+            ps.setLong(2, status.getCode());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    public Boolean delete(Long code) {
+        Optional<Status> optional = getStatusdByCode(code);
+        if (optional.isEmpty()) return false;
+
+        String sql = "DELETE FROM ORDER_STATUS WHERE code = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setLong(1, code);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 }

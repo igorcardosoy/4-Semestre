@@ -34,7 +34,8 @@ public class PaymentMethodDao {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return Optional.empty();
         }
         return Optional.empty();
     }
@@ -52,7 +53,8 @@ public class PaymentMethodDao {
             ps.setString(2, paymentMethod.getName());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return false;
         }
 
         return true;
@@ -72,9 +74,47 @@ public class PaymentMethodDao {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return List.of();
         }
 
         return paymentMethods;
+    }
+
+    public Boolean update(PaymentMethod paymentMethod){
+        Optional<PaymentMethod> optional = getPaymentMethodByCode(paymentMethod.getCode());
+        if(optional.isEmpty()) {
+            return false;
+        }
+
+        String sql = "update PAYMENT_METHOD set name=? where code=?";
+        try(Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setString(1, paymentMethod.getName());
+            ps.setLong(2, paymentMethod.getCode());
+            ps.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public Boolean delete(Long code){
+        Optional<PaymentMethod> optional = getPaymentMethodByCode(code);
+        if(optional.isEmpty()) {
+            return false;
+        }
+
+        String sql = "delete from PAYMENT_METHOD where code = ?";
+        try(Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setLong(1, code);
+            ps.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

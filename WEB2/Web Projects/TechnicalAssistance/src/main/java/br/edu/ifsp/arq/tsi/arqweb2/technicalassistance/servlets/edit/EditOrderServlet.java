@@ -1,4 +1,4 @@
-package br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets;
+package br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets.edit;
 
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.Customer;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.Order;
@@ -36,7 +36,7 @@ public class EditOrderServlet extends HttpServlet {
         OrderDao orderDao = new OrderDao(dataSource);
 
 
-        Optional<Order> order = orderDao.getOrderByCode((long) code);
+        Optional<Order> order = orderDao.getByCode((long) code);
         if (order.isEmpty()) {
             req.setAttribute("error", "Order not found");
             req.getRequestDispatcher(url).forward(req, resp);
@@ -44,7 +44,7 @@ public class EditOrderServlet extends HttpServlet {
         }
 
         req.setAttribute("paymentMethods", paymentMethodDao.getAllPaymentMethods());
-        req.setAttribute("customers", customerDao.getAllCustomers());
+        req.setAttribute("customers", customerDao.getAll());
         req.setAttribute("statuses", statusDao.getAllStatuses());
         req.setAttribute("order", order.get());
         req.setAttribute("action", "edit");
@@ -61,23 +61,24 @@ public class EditOrderServlet extends HttpServlet {
         StatusDao statusDao = new StatusDao(dataSource);
         OrderDao orderDao = new OrderDao(dataSource);
 
-        Optional<Order> order = orderDao.getOrderByCode((long) code);
+        Optional<Order> order = orderDao.getByCode((long) code);
         if (order.isEmpty()) {
-            req.setAttribute("error", "Order not found");
+            req.setAttribute("result", "error");
             req.getRequestDispatcher(url).forward(req, resp);
             return;
         }
 
         Optional<PaymentMethod> paymentMethod = paymentMethodDao.getPaymentMethodByCode(Long.parseLong(req.getParameter("paymentMethod")));
-        Optional<Status> status = statusDao.getStatusdByName(req.getParameter("status"));
-        Optional<Customer> customer = customerDao.getCustomerByCode(Long.parseLong(req.getParameter("customer")));
+        Optional<Status> status = statusDao.getStatusdByCode(Long.parseLong(req.getParameter("status")));
+        Optional<Customer> customer = customerDao.getByCode(Long.parseLong(req.getParameter("customer")));
 
         if (paymentMethod.isEmpty() || status.isEmpty() || customer.isEmpty()) {
-            req.setAttribute("error", "Invalid data");
+            req.setAttribute("result", "error");
             req.getRequestDispatcher(url).forward(req, resp);
             return;
         }
 
+        order.get().setCode((long) code);
         order.get().setDescription(req.getParameter("description"));
         order.get().setIssueDate(LocalDate.parse(req.getParameter("issueDate")));
         order.get().setEndDate(LocalDate.parse(req.getParameter("endDate")));
@@ -87,8 +88,13 @@ public class EditOrderServlet extends HttpServlet {
         order.get().setStatus(status.get());
         order.get().setCustomer(customer.get());
 
-        orderDao.update(order.get());
+        if (!orderDao.update(order.get())){
+            req.setAttribute("result", "error");
+            req.getRequestDispatcher(url).forward(req, resp);
+            return;
+        }
 
+        req.setAttribute("result", "success");
         resp.sendRedirect(req.getContextPath() + "/home");
     }
 }

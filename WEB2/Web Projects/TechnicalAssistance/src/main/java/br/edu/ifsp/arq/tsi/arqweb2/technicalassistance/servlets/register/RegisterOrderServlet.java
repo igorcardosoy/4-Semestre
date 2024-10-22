@@ -1,4 +1,4 @@
-package br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets;
+package br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets.register;
 
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.Customer;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.Order;
@@ -39,7 +39,7 @@ public class RegisterOrderServlet extends HttpServlet {
 
 
         req.setAttribute("paymentMethods", paymentMethodDao.getAllPaymentMethods());
-        req.setAttribute("customers", customerDao.getAllCustomers());
+        req.setAttribute("customers", customerDao.getAll());
         req.setAttribute("statuses", statusDao.getAllStatuses());
         req.setAttribute("action", "register");
 
@@ -49,18 +49,16 @@ public class RegisterOrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         //Dados do Pedido
-        int code;
+        long code, statusCode, customerCode;
         double price;
-        long customerCode;
         String description, observation;
         String paymentMethodCode;
-        Status status;
         LocalDate issueDate, endDate;
 
         DataSource dataSource = DataSourceSearcher.getInstance().getDataSource();
 
         try {
-            code = Integer.parseInt(req.getParameter("code"));
+            code = Long.parseLong(req.getParameter("code"));
             description = req.getParameter("description");
             issueDate = LocalDate.parse(req.getParameter("issueDate"));
             endDate = LocalDate.parse(req.getParameter("endDate"));
@@ -68,14 +66,14 @@ public class RegisterOrderServlet extends HttpServlet {
             observation = req.getParameter("observation");
             customerCode = Long.parseLong(req.getParameter("customer"));
             paymentMethodCode = (req.getParameter("paymentMethod"));
-            status = Status.valueOf(req.getParameter("status"));
+            statusCode = Long.parseLong(req.getParameter("status"));
         } catch (NumberFormatException e) {
             dispatcherForward(req, resp, url, "error");
             return;
         }
 
         CustomerDao customerDao = new CustomerDao(dataSource);
-        Optional<Customer> customer = customerDao.getCustomerByCode(customerCode);
+        Optional<Customer> customer = customerDao.getByCode(customerCode);
         if (customer.isEmpty()) {
             dispatcherForward(req, resp, url, "error");
             return;
@@ -89,7 +87,7 @@ public class RegisterOrderServlet extends HttpServlet {
         }
 
         StatusDao statusDao = new StatusDao(dataSource);
-        Optional<Status> statusOptional = statusDao.getStatusdByName(status.name());
+        Optional<Status> statusOptional = statusDao.getStatusdByCode(statusCode);
         if (statusOptional.isEmpty()) {
             dispatcherForward(req, resp, url, "error");
             return;
@@ -107,7 +105,7 @@ public class RegisterOrderServlet extends HttpServlet {
         order.setObservation(observation);
         order.setCustomer(customer.get());
         order.setPaymentMethod(paymentMethod.get());
-        order.setStatus(status);
+        order.setStatus(statusOptional.get());
 
         if (!orderDao.save(order)) {
             dispatcherForward(req, resp, url, "error");

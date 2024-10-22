@@ -6,7 +6,7 @@ public class Customer {
     private String name;
     private String email;
     private String phone;
-    private Long cpf;
+    private String cpf;
     private Boolean active;
     private Address address;
 
@@ -42,11 +42,11 @@ public class Customer {
         this.phone = phone;
     }
 
-    public Long getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(Long cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 

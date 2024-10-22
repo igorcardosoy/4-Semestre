@@ -37,8 +37,10 @@ public class AddressDao {
                 return Optional.of(address);
             }
         }catch (SQLException e) {
-            throw new RuntimeException("Erro durante a leitura no BD", e);
+            e.printStackTrace();
+            return Optional.empty();
         }
+
         return Optional.empty();
 
     }
@@ -52,10 +54,47 @@ public class AddressDao {
                 return rs.getInt("id");
             }
         }catch (SQLException e) {
-            throw new RuntimeException("Erro durante a leitura no BD", e);
+            e.printStackTrace();
+            return 0;
         }
 
         return 0;
+    }
+
+    public Boolean update(Address address){
+        Optional<Address> optional = getAddressById(address.getId());
+        if(optional.isEmpty()) {
+            return false;
+        }
+
+        String sql = "update ADDRESS set street=?, number=?, complement=?, neighborhood=?, city=?, state=?, zipcode=? where id=?";
+        try(Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+            createAddress(address, ps);
+            ps.setLong(8, address.getId());
+            ps.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public Boolean delete(Long id){
+        Optional<Address> optional = getAddressById(id);
+        if(optional.isEmpty()) {
+            return false;
+        }
+
+        String sql = "delete from ADDRESS where id = ?";
+        try(Connection conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setLong(1, id);
+            ps.executeUpdate();
+        }catch (SQLException e) {
+            throw new RuntimeException("Erro durante a escrita no BD", e);
+        }
+        return true;
     }
 
     public Boolean save(Address address){
@@ -67,17 +106,23 @@ public class AddressDao {
         String sql = "insert into ADDRESS (street, number, complement, neighborhood, city, state, zipcode) values (?, ?, ?, ?, ?, ?, ?)";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setString(1, address.getStreet());
-            ps.setString(2, address.getNumber());
-            ps.setString(3, address.getComplement());
-            ps.setString(4, address.getNeighborhood());
-            ps.setString(5, address.getCity());
-            ps.setString(6, address.getState());
-            ps.setString(7, address.getZipCode());
+            createAddress(address, ps);
             ps.executeUpdate();
         }catch (SQLException e) {
-            throw new RuntimeException("Erro durante a escrita no BD", e);
+            e.printStackTrace();
+            return false;
         }
+
         return true;
+    }
+
+    private void createAddress(Address address, PreparedStatement ps) throws SQLException {
+        ps.setString(1, address.getStreet());
+        ps.setString(2, address.getNumber());
+        ps.setString(3, address.getComplement());
+        ps.setString(4, address.getNeighborhood());
+        ps.setString(5, address.getCity());
+        ps.setString(6, address.getState());
+        ps.setString(7, address.getZipCode());
     }
 }

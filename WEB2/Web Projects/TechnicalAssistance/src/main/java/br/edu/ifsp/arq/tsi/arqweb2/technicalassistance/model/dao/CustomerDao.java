@@ -18,43 +18,34 @@ public class CustomerDao {
         this.dataSource = dataSource;
     }
 
-    private Optional<Customer> getCustomer(Optional<Customer> optional, PreparedStatement ps) throws SQLException {
-        try (ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                optional = Optional.of(creatCustomer(rs));
-            }
-        }
-        return optional;
-    }
-
-    public Optional<Customer> getCustomerByCode(Long customerCode) {
+    public Optional<Customer> getByCode(Long customerCode) {
         String sql = "select code, name, email, phone, cpf, address_id from CUSTOMER where code=?";
-        Optional<Customer> optional = Optional.empty();
+        Optional<Customer> optional;
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setLong(1, customerCode);
-            optional = getCustomer(optional, ps);
+            optional = getCustomer(ps);
         }catch (SQLException e) {
             throw new RuntimeException("Erro durante a consulta no BD", e);
         }
         return optional;
     }
 
-    public Optional<Customer> getCustomerByEmail(String email){
+    public Optional<Customer> getByEmail(String email){
         String sql = "select code, name, email, phone, cpf, address_id from CUSTOMER where email=?";
-        Optional<Customer> optional = Optional.empty();
+        Optional<Customer> optional;
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, email);
-            optional = getCustomer(optional, ps);
+            optional = getCustomer(ps);
         }catch (SQLException e) {
             throw new RuntimeException("Erro durante a consulta no BD", e);
         }
         return optional;
     }
 
-    public Boolean save(Customer user){
-        Optional<Customer> optional = getCustomerByEmail(user.getEmail());
+    public Boolean save(Customer customer){
+        Optional<Customer> optional = getByEmail(customer.getEmail());
         if(optional.isPresent()) {
             return false;
         }
@@ -62,20 +53,68 @@ public class CustomerDao {
         String sql = "insert into CUSTOMER (code, name, email, phone, cpf, address_id) values (?, ?, ?, ?, ?, ?)";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setInt(1, user.getCode());
-            ps.setString(2, user.getName());
-            ps.setString(3, user.getEmail());
-            ps.setString(4, user.getPhone());
-            ps.setLong(5, user.getCpf());
-            ps.setLong(6, user.getAddress().getId());
+            ps.setInt(1, customer.getCode());
+            ps.setString(2, customer.getName());
+            ps.setString(3, customer.getEmail());
+            ps.setString(4, customer.getPhone());
+            ps.setString(5, customer.getCpf());
+            ps.setLong(6, customer.getAddress().getId());
             ps.executeUpdate();
         }catch (SQLException e) {
-            throw new RuntimeException("Erro durante a escrita no BD", e);
+            e.printStackTrace();
+            return false;
         }
         return true;
     }
 
-    public List<Customer> getAllCustomers() {
+    public Boolean update(Customer customer) {
+        Optional<Customer> optional = getByCode((long) customer.getCode());
+        if (optional.isEmpty()) return false;
+
+        String sql = """
+                        update CUSTOMER
+                        set name = ?,
+                            email = ?,
+                            phone = ?,
+                            cpf = ?,
+                            address_id = ?
+                        where code = ?""";
+
+        try (Connection conn = dataSource.getConnection()){
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ps.setString(1, customer.getName());
+             ps.setString(2, customer.getEmail());
+             ps.setString(3, customer.getPhone());
+             ps.setString(4, customer.getCpf());
+             ps.setLong(5, customer.getAddress().getId());
+             ps.setLong(6, customer.getCode());
+             ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    public Boolean delete(Long code) {
+        Optional<Customer> optional = getByCode(code);
+        if (optional.isEmpty()) return false;
+        String sql = "delete from CUSTOMER where code = ?";
+
+        try (Connection conn = dataSource.getConnection()){
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ps.setLong(1, code);
+             ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    public List<Customer> getAll() {
         List<Optional<Customer>> customers = new ArrayList<>();
         try {
             Connection conn = dataSource.getConnection();
@@ -83,10 +122,13 @@ public class CustomerDao {
             ResultSet rs = stmt.executeQuery("select code, name, email, phone, cpf, address_id from CUSTOMER");
             while (rs.next()) {
                 Customer customer = creatCustomer(rs);
+                if (customer == null) continue;
+
                 customers.add(Optional.of(customer));
             }
         } catch (RuntimeException | SQLException e) {
-            throw new RuntimeException("Erro durante a consulta no BD", e);
+            e.printStackTrace();
+            return List.of();
         }
 
         List<Customer> customersList = new ArrayList<>();
@@ -102,7 +144,7 @@ public class CustomerDao {
         Optional<Address> address = addressDao.getAddressById(rs.getLong(6));
 
         if (address.isEmpty()) {
-            throw new RuntimeException("Address not found");
+            return null;
         }
 
         Customer customer = new Customer();
@@ -110,10 +152,19 @@ public class CustomerDao {
         customer.setName(rs.getString(2));
         customer.setEmail(rs.getString(3));
         customer.setPhone(rs.getString(4));
-        customer.setCpf(rs.getLong(5));
+        customer.setCpf(rs.getString(5));
         customer.setAddress(address.get());
         return customer;
     }
 
+    private Optional<Customer> getCustomer(PreparedStatement ps) throws SQLException {
+        Optional<Customer> customer = Optional.empty();
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                customer = Optional.ofNullable(creatCustomer(rs));
+            }
+        }
+        return customer;
+    }
 
 }

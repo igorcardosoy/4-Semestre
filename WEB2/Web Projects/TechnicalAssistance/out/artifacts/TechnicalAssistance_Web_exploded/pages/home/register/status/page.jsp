@@ -19,24 +19,14 @@
 <main class="w-full flex items-center justify-center">
   <div class="container mx-auto max-w-80 mt-32">
     <div>
-      <c:choose>
-        <c:when test="${result == 'success'}">
-          <div class="alert alert-success alert-dismissible fade show"
-               role="alert">
-            Forma de pagamento cadastrada com sucesso.
-            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                    aria-label="Close"></button>
-          </div>
-        </c:when>
-        <c:when test="${result == 'error'}">
-          <div class="alert alert-error alert-dismissible fade show"
-               role="alert">
-            Erro ao cadastrar forma de pagamento.
-            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                    aria-label="Close"></button>
-          </div>
-        </c:when>
-      </c:choose>
+      <<c:choose>
+      <c:when test="${result == 'success'}">
+        <jsp:include page="/components/SuccessAlert.jsp"/>
+      </c:when>
+      <c:when test="${result == 'error'}">
+        <jsp:include page="/components/ErrorAlert.jsp"/>
+      </c:when>
+    </c:choose>
       <form id="form" action="${pageContext.request.contextPath}/home/register/status" method="post" class="mt-5">
         <h1 class="text-center ">Cadastro de Status</h1>
 

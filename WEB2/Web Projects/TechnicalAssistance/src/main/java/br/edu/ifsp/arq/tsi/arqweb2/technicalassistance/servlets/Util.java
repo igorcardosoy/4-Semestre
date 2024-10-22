@@ -9,7 +9,7 @@ import java.io.IOException;
 public class Util {
 
     public static void dispatcherForward(HttpServletRequest req, HttpServletResponse resp, String path, String message) {
-        req.setAttribute("message", message);
+        req.setAttribute("result", message);
         try {
             req.getRequestDispatcher(path).forward(req, resp);
         } catch (ServletException | IOException e) {
