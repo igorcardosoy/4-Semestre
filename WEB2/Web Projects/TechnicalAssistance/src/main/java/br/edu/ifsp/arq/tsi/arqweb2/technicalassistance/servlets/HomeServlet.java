@@ -36,4 +36,9 @@ public class HomeServlet extends HttpServlet {
         req.setAttribute("statuses", statusDao.getAllStatuses());
         req.getRequestDispatcher("./pages/home/page.jsp").forward(req, resp);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req, resp);
+    }
 }

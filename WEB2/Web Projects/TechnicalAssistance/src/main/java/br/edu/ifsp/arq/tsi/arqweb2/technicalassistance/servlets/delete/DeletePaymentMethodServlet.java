@@ -28,6 +28,6 @@ public class DeletePaymentMethodServlet extends HttpServlet {
         }
 
         req.setAttribute("result", "success");
-        resp.sendRedirect(req.getContextPath() + "/home");  //Not send the Attribute
+        req.getRequestDispatcher("/home").forward(req, resp);
     }
 }

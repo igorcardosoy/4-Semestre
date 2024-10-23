@@ -3,6 +3,8 @@ package br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets.edit;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.PaymentMethod;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.dao.PaymentMethodDao;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.util.DataSourceSearcher;
+import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets.Util;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -28,8 +30,7 @@ public class EditPaymentMethodServlet extends HttpServlet {
         PaymentMethodDao paymentMethodDao = new PaymentMethodDao(dataSource);
         Optional<PaymentMethod> paymentMethod = paymentMethodDao.getPaymentMethodByCode((long) code);
         if (paymentMethod.isEmpty()) {
-            req.setAttribute("result", "error");
-            req.getRequestDispatcher(url).forward(req, resp);
+            Util.dispatcherForward(req, resp, "/home", "error");
             return;
         }
 
@@ -51,12 +52,10 @@ public class EditPaymentMethodServlet extends HttpServlet {
         paymentMethod.setName(name);
 
         if (!paymentMethodDao.update(paymentMethod)) {
-            req.setAttribute("result", "error");
-            req.getRequestDispatcher(url).forward(req, resp);
+            Util.dispatcherForward(req, resp, url, "error");
             return;
         }
 
-        req.setAttribute("result", "success");
-        resp.sendRedirect(req.getContextPath() + "/home");
+        Util.dispatcherForward(req, resp, "/home", "success");
     }
 }

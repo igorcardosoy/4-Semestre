@@ -8,6 +8,8 @@ public class Address {
     private String neighborhood;
     private String city;
     private String state;
+    private String zipCode;
+    private String complement;
 
     public Long getId() {
         return id;
@@ -16,9 +18,6 @@ public class Address {
     public void setId(Long id) {
         this.id = id;
     }
-
-    private String zipCode;
-    private String complement;
 
     public String getNumber() {
         return number;
