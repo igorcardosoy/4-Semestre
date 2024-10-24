@@ -2,7 +2,7 @@ package br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model;
 
 public class Customer {
 
-    private Integer code;
+    private Long code;
     private String name;
     private String email;
     private String phone;
@@ -10,11 +10,11 @@ public class Customer {
     private Boolean active;
     private Address address;
 
-    public Integer getCode() {
+    public Long getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(Long code) {
         this.code = code;
     }
 

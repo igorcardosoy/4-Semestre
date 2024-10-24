@@ -5,6 +5,7 @@ import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.Customer;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.dao.AddressDao;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.dao.CustomerDao;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.util.DataSourceSearcher;
+import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets.Util;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,17 +16,19 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.Optional;
 
+import static br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets.Util.dispatcherForward;
+
 @WebServlet("/home/edit/customer")
 public class EditCustomerServlet extends HttpServlet {
     private static final String url = "/pages/home/register/customer/page.jsp";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int code = Integer.parseInt(req.getParameter("code"));
+        long code = Long.parseLong(req.getParameter("code"));
         DataSource dataSource = DataSourceSearcher.getInstance().getDataSource();
 
         CustomerDao customerDao = new CustomerDao(dataSource);
-        Optional<Customer> customer = customerDao.getByCode((long) code);
+        Optional<Customer> customer = customerDao.getByCode(code);
         if (customer.isEmpty()) {
             req.setAttribute("error", "Customer not found");
             req.getRequestDispatcher(url).forward(req, resp);
@@ -47,7 +50,7 @@ public class EditCustomerServlet extends HttpServlet {
 
         Customer customer = new Customer();
 
-        customer.setCode(Integer.valueOf(req.getParameter("code")));
+        customer.setCode(Long.parseLong(req.getParameter("code")));
         customer.setName(req.getParameter("name"));
         customer.setEmail(req.getParameter("email"));
         customer.setPhone(req.getParameter("phone"));
@@ -55,7 +58,7 @@ public class EditCustomerServlet extends HttpServlet {
 
         Address address = new Address();
 
-        address.setId(Long.parseLong(req.getParameter("addressId")));
+        address.setCode(Long.parseLong(req.getParameter("addressCode")));
         address.setNumber(req.getParameter("number"));
         address.setStreet(req.getParameter("street"));
         address.setNeighborhood(req.getParameter("neighborhood"));
@@ -65,20 +68,17 @@ public class EditCustomerServlet extends HttpServlet {
         address.setComplement(req.getParameter("complement"));
 
         if (!addressDao.update(address)) {
-            req.setAttribute("result", "error");
-            req.getRequestDispatcher(url).forward(req, resp);
+            dispatcherForward(req, resp, url, "error");
             return;
         }
 
         customer.setAddress(address);
 
         if (!customerDao.update(customer)){
-            req.setAttribute("result", "error");
-            req.getRequestDispatcher(url).forward(req, resp);
+            dispatcherForward(req, resp, url, "error");
             return;
         }
 
-        req.setAttribute("result", "success");
-        resp.sendRedirect(req.getContextPath() + "/home");
+        dispatcherForward(req, resp, "/home", "success");
     }
 }

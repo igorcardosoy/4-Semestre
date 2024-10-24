@@ -40,20 +40,19 @@
 							<div class="alert flex items-center justify-center flex-wrap max-w-80">
 								<h1 class="card-title ">Dados Pessoais</h1>
 
+
+									<c:choose>
+										<c:when test="${customer != null}">
 								<label class="input input-bordered flex items-center gap-2">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-braces-asterisk" viewBox="0 0 16 16">
 										<path fill-rule="evenodd" d="M1.114 8.063V7.9c1.005-.102 1.497-.615 1.497-1.6V4.503c0-1.094.39-1.538 1.354-1.538h.273V2h-.376C2.25 2 1.49 2.759 1.49 4.352v1.524c0 1.094-.376 1.456-1.49 1.456v1.299c1.114 0 1.49.362 1.49 1.456v1.524c0 1.593.759 2.352 2.372 2.352h.376v-.964h-.273c-.964 0-1.354-.444-1.354-1.538V9.663c0-.984-.492-1.497-1.497-1.6M14.886 7.9v.164c-1.005.103-1.497.616-1.497 1.6v1.798c0 1.094-.39 1.538-1.354 1.538h-.273v.964h.376c1.613 0 2.372-.759 2.372-2.352v-1.524c0-1.094.376-1.456 1.49-1.456v-1.3c-1.114 0-1.49-.362-1.49-1.456V4.352C14.51 2.759 13.75 2 12.138 2h-.376v.964h.273c.964 0 1.354.444 1.354 1.538V6.3c0 .984.492 1.497 1.497 1.6M7.5 11.5V9.207l-1.621 1.621-.707-.707L6.792 8.5H4.5v-1h2.293L5.172 5.879l.707-.707L7.5 6.792V4.5h1v2.293l1.621-1.621.707.707L9.208 7.5H11.5v1H9.207l1.621 1.621-.707.707L8.5 9.208V11.5z"></path>
 									</svg>
-									<c:choose>
-										<c:when test="${customer == null}">
-											<input name="code" type="number" class="grow" placeholder="Code" required="required" />
-										</c:when>
-										<c:otherwise>
 											<input disabled value="${customer.getCode()}"/>
 											<input name="code" type="hidden" class="hidden" value="${customer.getCode()}" />
-										</c:otherwise>
-									</c:choose>
 								</label>
+										</c:when>
+									</c:choose>
+
 
 								<label class="input input-bordered flex items-center gap-2">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
@@ -89,8 +88,8 @@
 
 								<h1 class="card-title">Endereço</h1>
 
-								<label class="hidden" for="addressId">
-									<input id="addressId" name="addressId" type="text" class="hidden" value="${customer.getAddress().getId()}" />
+								<label class="hidden" for="addressCode">
+									<input id="addressCode" name="addressCode" type="text" class="hidden" value="${customer.getAddress().getCode()}" />
 								</label>
 
 								<label class="input input-bordered flex items-center gap-2">
@@ -111,7 +110,7 @@
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
 										<path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5"></path>
 									</svg>
-									<input id="number" name="number" type="text" class="grow" placeholder="Número" required value="${customer.getAddress().getComplement()}" />
+									<input id="number" name="number" type="text" class="grow" placeholder="Número" required value="${customer.getAddress().getNumber()}" />
 								</label>
 
 								<label class="input input-bordered flex items-center gap-2">

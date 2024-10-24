@@ -2,7 +2,7 @@ package br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model;
 
 public class Address {
 
-    private Long id;
+    private Long code;
     private String number;
     private String street;
     private String neighborhood;
@@ -11,12 +11,12 @@ public class Address {
     private String zipCode;
     private String complement;
 
-    public Long getId() {
-        return id;
+    public Long getCode() {
+        return code;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCode(Long code) {
+        this.code = code;
     }
 
     public String getNumber() {

@@ -19,7 +19,7 @@ public class CustomerDao {
     }
 
     public Optional<Customer> getByCode(Long customerCode) {
-        String sql = "select code, name, email, phone, cpf, address_id from CUSTOMER where code=?";
+        String sql = "select code, name, email, phone, cpf, address_code from customer where code=?";
         Optional<Customer> optional;
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
@@ -32,7 +32,7 @@ public class CustomerDao {
     }
 
     public Optional<Customer> getByEmail(String email){
-        String sql = "select code, name, email, phone, cpf, address_id from CUSTOMER where email=?";
+        String sql = "select code, name, email, phone, cpf, address_code from customer where email=?";
         Optional<Customer> optional;
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
@@ -50,15 +50,14 @@ public class CustomerDao {
             return false;
         }
 
-        String sql = "insert into CUSTOMER (code, name, email, phone, cpf, address_id) values (?, ?, ?, ?, ?, ?)";
+        String sql = "insert into customer (name, email, phone, cpf, address_code) values (?, ?, ?, ?, ?)";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setInt(1, customer.getCode());
-            ps.setString(2, customer.getName());
-            ps.setString(3, customer.getEmail());
-            ps.setString(4, customer.getPhone());
-            ps.setString(5, customer.getCpf());
-            ps.setLong(6, customer.getAddress().getId());
+            ps.setString(1, customer.getName());
+            ps.setString(2, customer.getEmail());
+            ps.setString(3, customer.getPhone());
+            ps.setString(4, customer.getCpf());
+            ps.setLong(5, customer.getAddress().getCode());
             ps.executeUpdate();
         }catch (SQLException e) {
             e.printStackTrace();
@@ -68,16 +67,16 @@ public class CustomerDao {
     }
 
     public Boolean update(Customer customer) {
-        Optional<Customer> optional = getByCode((long) customer.getCode());
+        Optional<Customer> optional = getByCode(customer.getCode());
         if (optional.isEmpty()) return false;
 
         String sql = """
-                        update CUSTOMER
+                        update customer
                         set name = ?,
                             email = ?,
                             phone = ?,
                             cpf = ?,
-                            address_id = ?
+                            address_code = ?
                         where code = ?""";
 
         try (Connection conn = dataSource.getConnection()){
@@ -86,7 +85,7 @@ public class CustomerDao {
              ps.setString(2, customer.getEmail());
              ps.setString(3, customer.getPhone());
              ps.setString(4, customer.getCpf());
-             ps.setLong(5, customer.getAddress().getId());
+             ps.setLong(5, customer.getAddress().getCode());
              ps.setLong(6, customer.getCode());
              ps.executeUpdate();
         } catch (SQLException e) {
@@ -100,7 +99,7 @@ public class CustomerDao {
     public Boolean delete(Long code) {
         Optional<Customer> optional = getByCode(code);
         if (optional.isEmpty()) return false;
-        String sql = "delete from CUSTOMER where code = ?";
+        String sql = "delete from customer where code = ?";
 
         try (Connection conn = dataSource.getConnection()){
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -119,7 +118,7 @@ public class CustomerDao {
         try {
             Connection conn = dataSource.getConnection();
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("select code, name, email, phone, cpf, address_id from CUSTOMER");
+            ResultSet rs = stmt.executeQuery("select code, name, email, phone, cpf, address_code from customer");
             while (rs.next()) {
                 Customer customer = creatCustomer(rs);
                 if (customer == null) continue;
@@ -141,14 +140,14 @@ public class CustomerDao {
 
     private Customer creatCustomer(ResultSet rs) throws SQLException, RuntimeException {
         AddressDao addressDao = new AddressDao(dataSource);
-        Optional<Address> address = addressDao.getAddressById(rs.getLong(6));
+        Optional<Address> address = addressDao.getByCode(rs.getLong(6));
 
         if (address.isEmpty()) {
             return null;
         }
 
         Customer customer = new Customer();
-        customer.setCode(rs.getInt(1));
+        customer.setCode(rs.getLong(1));
         customer.setName(rs.getString(2));
         customer.setEmail(rs.getString(3));
         customer.setPhone(rs.getString(4));

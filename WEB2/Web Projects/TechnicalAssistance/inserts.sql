@@ -1,43 +1,71 @@
--- Inserindo dados na tabela ADDRESS
-INSERT INTO ADDRESS (STREET, NUMBER, COMPLEMENT, NEIGHBORHOOD, CITY, STATE, ZIPCODE)
-VALUES ('Rua das Laranjeiras', '10', 'Apto 202', 'Centro', 'Araraquara', 'São Paulo', '14800-100'),
-       ('Avenida Paulista', '200', NULL, 'Bela Vista', 'São Paulo', 'São Paulo', '01310-000'),
-       ('Rua XV de Novembro', '50', 'Casa', 'Centro', 'Campinas', 'São Paulo', '13000-150'),
-       ('Rua da Praia', '1000', 'Cobertura', 'Gonzaga', 'Santos', 'São Paulo', '11060-000'),
-       ('Avenida Atlântica', '300', 'Apto 101', 'Copacabana', 'Rio de Janeiro', 'Rio de Janeiro', '22000-000');
+INSERT INTO address (street, number, complement, neighborhood, city, state, zipcode)
+VALUES ('Av. Paulista', '1000', 'Apt 101', 'Bela Vista', 'São Paulo', 'SP', '01311-000');
+INSERT INTO address (street, number, complement, neighborhood, city, state, zipcode)
+VALUES ('Rua dos Bobos', '0', NULL, 'Centro', 'Campinas', 'SP', '13010-000');
+INSERT INTO address (street, number, complement, neighborhood, city, state, zipcode)
+VALUES ('Rua da Liberdade', '200', 'Casa 2', 'Liberdade', 'São Paulo', 'SP', '01503-010');
+INSERT INTO address (street, number, complement, neighborhood, city, state, zipcode)
+VALUES ('Av. das Nações', '101', 'Bloco A', 'Centro', 'Brasília', 'DF', '70040-000');
+INSERT INTO address (street, number, complement, neighborhood, city, state, zipcode)
+VALUES ('Rua Bahia', '300', NULL, 'Jardins', 'Salvador', 'BA', '40050-000');
+INSERT INTO address (street, number, complement, neighborhood, city, state, zipcode)
+VALUES ('Av. Atlântica', '50', 'Apto 101', 'Copacabana', 'Rio de Janeiro', 'RJ', '22021-000');
+INSERT INTO address (street, number, complement, neighborhood, city, state, zipcode)
+VALUES ('Rua XV de Novembro', '99', NULL, 'Centro', 'Curitiba', 'PR', '80020-310');
+INSERT INTO address (street, number, complement, neighborhood, city, state, zipcode)
+VALUES ('Rua da Paz', '500', NULL, 'Jardim', 'Recife', 'PE', '50040-000');
 
--- Inserindo dados na tabela CUSTOMER
-INSERT INTO CUSTOMER (CODE, NAME, EMAIL, PHONE, CPF, ADDRESS_ID)
-VALUES (100001, 'Carlos Souza', 'carlos.souza@gmail.com', '(11) 99999-9999', '123.456.789-00', 1),
-       (100002, 'Ana Oliveira', 'ana.oliveira@yahoo.com', '(21) 98888-8888', '987.654.321-11', 2),
-       (100003, 'Marcos Silva', 'marcos.silva@outlook.com', '(19) 97777-7777', '321.654.987-22', 3),
-       (100004, 'Fernanda Costa', 'fernanda.costa@hotmail.com', '(13) 96666-6666', '654.987.321-33', 4),
-       (100005, 'João Santos', 'joao.santos@gmail.com', '(21) 95555-5555', '789.123.456-44', 5);
+INSERT INTO customer (name, email, phone, cpf, address_code)
+VALUES ('João Silva', 'joao.silva@gmail.com', '(11) 99999-9999', '123.456.789-00', 1);
+INSERT INTO customer (name, email, phone, cpf, address_code)
+VALUES ('Maria Oliveira', 'maria.oliveira@hotmail.com', '(19) 98888-8888', '234.567.890-01', 2);
+INSERT INTO customer (name, email, phone, cpf, address_code)
+VALUES ('Carlos Pereira', 'carlos.pereira@yahoo.com', '(11) 97777-7777', '345.678.901-02', 3);
+INSERT INTO customer (name, email, phone, cpf, address_code)
+VALUES ('Ana Souza', 'ana.souza@gmail.com', '(61) 99999-9999', '456.789.012-03', 4);
+INSERT INTO customer (name, email, phone, cpf, address_code)
+VALUES ('Lucas Lima', 'lucas.lima@hotmail.com', '(71) 98765-4321', '567.890.123-04', 5);
+INSERT INTO customer (name, email, phone, cpf, address_code)
+VALUES ('Fernanda Alves', 'fernanda.alves@gmail.com', '(21) 91234-5678', '678.901.234-05', 6);
+INSERT INTO customer (name, email, phone, cpf, address_code)
+VALUES ('Paulo Moreira', 'paulo.moreira@hotmail.com', '(41) 94567-8901', '789.012.345-06', 7);
+INSERT INTO customer (name, email, phone, cpf, address_code)
+VALUES ('Juliana Costa', 'juliana.costa@gmail.com', '(81) 93456-7890', '890.123.456-07', 8);
 
--- Inserindo dados na tabela PAYMENT_METHOD
-INSERT INTO PAYMENT_METHOD (CODE, NAME)
-VALUES (5001, 'Cartão de Crédito'),
-       (5002, 'Boleto Bancário'),
-       (5003, 'Pix'),
-       (5004, 'Transferência Bancária'),
-       (5005, 'Dinheiro');
 
--- Inserindo dados na tabela ORDER_STATUS
-INSERT INTO ORDER_STATUS (CODE, NAME)
-VALUES (6001, 'Pendente'),
-       (6002, 'Em Andamento'),
-       (6003, 'Concluído'),
-       (6004, 'Cancelado');
+INSERT INTO payment_method (name) VALUES ('Cartão de Crédito');
+INSERT INTO payment_method (name) VALUES ('Boleto');
+INSERT INTO payment_method (name) VALUES ('Transferência Bancária');
+INSERT INTO payment_method (name) VALUES ('Dinheiro');
+INSERT INTO payment_method (name) VALUES ('PIX');
+INSERT INTO payment_method (name) VALUES ('Cartão de Débito');
+INSERT INTO payment_method (name) VALUES ('PayPal');
+INSERT INTO payment_method (name) VALUES ('Cheque');
 
--- Inserindo dados na tabela CUSTOMER_ORDER
-INSERT INTO CUSTOMER_ORDER (CODE, DESCRIPTION, ISSUE_DATE, END_DATE, PRICE, CUSTOMER_CODE, PAYMENT_METHOD_CODE,
-                            STATUS_CODE, OBSERVATION)
-VALUES (700001, 'Troca de tela de smartphone', '2024-10-01', '2024-10-03', 300.00, 100001, 5001, 6003,
-        'Troca de tela de iPhone'),
-       (700002, 'Formatação de notebook', '2024-09-25', '2024-09-27', 150.00, 100002, 5002, 6003,
-        'Formatação e instalação de Windows'),
-       (700003, 'Reparo de impressora', '2024-10-10', '2024-10-15', 200.00, 100003, 5003, 6002,
-        'Substituição de cabeçote'),
-       (700004, 'Instalação de roteador', '2024-10-05', '2024-10-06', 120.00, 100004, 5004, 6003, NULL),
-       (700005, 'Troca de bateria de notebook', '2024-09-30', '2024-10-02', 180.00, 100005, 5005, 6001,
-        'Bateria não original disponível no mercado');
+
+INSERT INTO order_status (name) VALUES ('Aberto');
+INSERT INTO order_status (name) VALUES ('Em andamento');
+INSERT INTO order_status (name) VALUES ('Concluído');
+INSERT INTO order_status (name) VALUES ('Cancelado');
+INSERT INTO order_status (name) VALUES ('Aguardando pagamento');
+INSERT INTO order_status (name) VALUES ('Pago');
+INSERT INTO order_status (name) VALUES ('Reembolsado');
+INSERT INTO order_status (name) VALUES ('Aguardando peças');
+
+INSERT INTO customer_order (description, issue_date, end_date, price, customer_code, payment_method_code, status_code, observation)
+VALUES ('Reparo de notebook', '2024-10-01', '2024-10-05', 350.00, 1, 1, 1, 'Problema de superaquecimento');
+INSERT INTO customer_order (description, issue_date, end_date, price, customer_code, payment_method_code, status_code, observation)
+VALUES ('Troca de tela de celular', '2024-10-02', '2024-10-06', 450.00, 2, 2, 2, 'Tela quebrada');
+INSERT INTO customer_order (description, issue_date, end_date, price, customer_code, payment_method_code, status_code, observation)
+VALUES ('Instalação de SSD', '2024-09-30', '2024-10-04', 200.00, 3, 3, 3, 'Substituição de HD por SSD');
+INSERT INTO customer_order (description, issue_date, end_date, price, customer_code, payment_method_code, status_code, observation)
+VALUES ('Manutenção em desktop', '2024-10-01', '2024-10-05', 300.00, 4, 4, 4, 'Reparação de fonte de alimentação');
+INSERT INTO customer_order (description, issue_date, end_date, price, customer_code, payment_method_code, status_code, observation)
+VALUES ('Formatação de PC', '2024-10-03', '2024-10-07', 150.00, 5, 5, 5, 'Formatação e reinstalação do sistema');
+INSERT INTO customer_order (description, issue_date, end_date, price, customer_code, payment_method_code, status_code, observation)
+VALUES ('Limpeza interna de notebook', '2024-09-29', '2024-10-03', 100.00, 6, 6, 6, 'Remoção de poeira');
+INSERT INTO customer_order (description, issue_date, end_date, price, customer_code, payment_method_code, status_code, observation)
+VALUES ('Substituição de placa-mãe', '2024-10-01', '2024-10-10', 500.00, 7, 7, 7, 'Placa-mãe com defeito');
+INSERT INTO customer_order (description, issue_date, end_date, price, customer_code, payment_method_code, status_code, observation)
+VALUES ('Atualização de software', '2024-10-05', '2024-10-08', 250.00, 8, 8, 8, 'Atualização de drivers e sistema');
+

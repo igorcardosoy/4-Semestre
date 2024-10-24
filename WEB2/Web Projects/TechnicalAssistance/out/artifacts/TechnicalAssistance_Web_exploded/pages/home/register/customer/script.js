@@ -3,7 +3,63 @@
 window.onload = initPage;
 window.onload = () => {
     document.getElementById('zipcode').addEventListener('input', searchCep);
+    document.getElementById('zipcode').addEventListener('input', maskZipcode);
+    document.getElementsByName('cpf')[0].addEventListener('input', maskCPF);
+    document.getElementsByName('phone')[0].addEventListener('input', maskPhone);
 }
+
+function maskZipcode() {
+    let cep = document.getElementsByName('zipcode')[0];
+
+    if (cep.value.length < 9) {
+        cep.value = cep.value.replace(/\D/g, '');
+        cep.value = cep.value.replace(/^(\d{5})(\d)/, '$1-$2');
+    }
+
+    if (cep.value.length > 9) {
+        cep.value = cep.value.substring(0, 9);
+    }
+
+    return cep.value;
+}
+
+
+function maskPhone() {
+    let phone = document.getElementsByName('phone')[0];
+    phone.value = phone.value.replace(/\D/g, '');
+
+    if (phone.value.length > 10) {
+        phone.value = phone.value.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    } else {
+        phone.value = phone.value.replace(/^(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+    }
+
+    if (phone.value.length > 15) {
+        phone.value = phone.value.substring(0, 15);
+    }
+
+    return phone.value;
+}
+
+
+function maskCPF() {
+    let cpf = document.getElementsByName('cpf')[0];
+
+    if (cpf.value.length < 14){
+        cpf.value = cpf.value.replace(/\D/g, '');
+
+        cpf.value = cpf.value.replace(/(\d{3})(\d)/, '$1.$2');
+        cpf.value = cpf.value.replace(/(\d{3})(\d)/, '$1.$2');
+        cpf.value = cpf.value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    }
+
+    if (cpf.value.length > 14) {
+        cpf.value = cpf.value.substring(0, 14);
+    }
+
+    return cpf.value;
+}
+
 
 function initPage(){
     let form;
@@ -47,13 +103,14 @@ function applyValidity(form){
 
 async function searchCep(){
 
-    let cep = document.getElementById('zipcode').value;
+    let cep = document.getElementById('zipcode').value.replace(/\D/g, '');
+
     let street = document.getElementById('street');
     let neighborhood = document.getElementById('neighborhood');
     let city = document.getElementById('city');
     let state = document.getElementById('state');
 
-    if (cep.length !== 8) {
+    if (cep.length < 8) {
         street.value = '';
         neighborhood.value = '';
         city.value = '';

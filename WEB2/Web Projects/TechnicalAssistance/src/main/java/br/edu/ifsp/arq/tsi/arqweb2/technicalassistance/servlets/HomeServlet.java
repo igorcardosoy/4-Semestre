@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -22,7 +23,12 @@ import java.util.List;
 public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        HttpSession session = req.getSession(false);
+        String result = "";
+        if (session != null) {
+            result = (String) session.getAttribute("result");
+            session.removeAttribute("result");
+        }
         DataSource dataSource = DataSourceSearcher.getInstance().getDataSource();
 
         CustomerDao customerDao = new CustomerDao(dataSource);
@@ -34,6 +40,7 @@ public class HomeServlet extends HttpServlet {
         req.setAttribute("customers", customerDao.getAll());
         req.setAttribute("orders", orderDao.getAll());
         req.setAttribute("statuses", statusDao.getAllStatuses());
+        req.setAttribute("result", result);
         req.getRequestDispatcher("./pages/home/page.jsp").forward(req, resp);
     }
 

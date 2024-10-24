@@ -9,6 +9,7 @@ import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.dao.OrderDao;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.dao.PaymentMethodDao;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.dao.StatusDao;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.util.DataSourceSearcher;
+import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets.Util;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,6 +20,8 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Optional;
+
+import static br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets.Util.dispatcherForward;
 
 @WebServlet("/home/edit/order")
 public class EditOrderServlet extends HttpServlet {
@@ -69,12 +72,11 @@ public class EditOrderServlet extends HttpServlet {
         }
 
         Optional<PaymentMethod> paymentMethod = paymentMethodDao.getPaymentMethodByCode(Long.parseLong(req.getParameter("paymentMethod")));
-        Optional<Status> status = statusDao.getStatusdByCode(Long.parseLong(req.getParameter("status")));
+        Optional<Status> status = statusDao.getByCode(Long.parseLong(req.getParameter("status")));
         Optional<Customer> customer = customerDao.getByCode(Long.parseLong(req.getParameter("customer")));
 
         if (paymentMethod.isEmpty() || status.isEmpty() || customer.isEmpty()) {
-            req.setAttribute("result", "error");
-            req.getRequestDispatcher(url).forward(req, resp);
+            Util.dispatcherForward(req, resp, url, "error");
             return;
         }
 
@@ -94,7 +96,6 @@ public class EditOrderServlet extends HttpServlet {
             return;
         }
 
-        req.setAttribute("result", "success");
-        resp.sendRedirect(req.getContextPath() + "/home");
+        dispatcherForward(req, resp, "/home", "success");
     }
 }

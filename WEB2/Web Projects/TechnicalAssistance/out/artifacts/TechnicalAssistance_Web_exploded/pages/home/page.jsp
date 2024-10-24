@@ -14,21 +14,27 @@
     <jsp:include page="/components/Head.jsp">
       <jsp:param name="title" value="Assistência Técninca - Home" />
     </jsp:include>
+
+    <script defer src="${pageContext.request.contextPath}/pages/home/script.js"></script>
   </head>
 
   <body>
     <jsp:include page="/components/Header.jsp"/>
 
-    <c:choose>
-      <c:when test="${result == 'success'}">
-        <jsp:include page="/components/SuccessAlert.jsp"/>
-      </c:when>
-      <c:when test="${result == 'error'}">
-        <jsp:include page="/components/ErrorAlert.jsp"/>
-      </c:when>
-    </c:choose>
+    <div class="flex lex-col items-center justify-center mt-5">
+      <c:choose>
+        <c:when test="${result == 'success'}">
+          <jsp:include page="/components/SuccessAlert.jsp"/>
+        </c:when>
+        <c:when test="${result == 'error'}">
+          <jsp:include page="/components/ErrorAlert.jsp"/>
+        </c:when>
+      </c:choose>
+    </div>
 
     <main class="flex flex-col items-center min-h-svh mt-14">
+
+
 
       <div class="text-center mt-5 max-w-6xl flex flex-wrap items-center justify-center gap-5">
         <div class="alert flex flex-col items-center justify-center max-w-6xl pb-14 pl-14 pr-14">
@@ -51,13 +57,6 @@
 
           <div class="flex flex-row flex-wrap max-w-5xl gap-5 items-center justify-center">
 
-            <%
-              StatusDao statusDao = new StatusDao(DataSourceSearcher.getInstance().getDataSource());
-              List<Status> statuses = statusDao.getAllStatuses();
-
-              request.setAttribute("statuses", statuses);
-            %>
-
             <c:forEach var="order" items="${orders}">
               <jsp:include page="/components/CardOrderHome.jsp">
                 <jsp:param name="code" value="${order.getCode()}" />
@@ -78,9 +77,22 @@
 
           <div class="flex flex-row flex-wrap max-w-5xl gap-5 items-center justify-center">
             <c:forEach var="paymentMethod" items="${paymentMethods}">
-              <jsp:include page="/components/CardPaymentMethod.jsp">
+              <jsp:include page="/components/CardPaymentMethodHome.jsp">
                 <jsp:param name="name" value="${paymentMethod.getName()}" />
                 <jsp:param name="code" value="${paymentMethod.getCode()}" />
+              </jsp:include>
+            </c:forEach>
+          </div>
+        </div>
+
+        <div class="alert flex flex-col items-center justify-center max-w-6xl pb-14 pl-14 pr-14">
+          <h1 class="card-title">Lista de Status</h1>
+
+          <div class="flex flex-row flex-wrap max-w-5xl gap-5 items-center justify-center">
+            <c:forEach var="status" items="${statuses}">
+              <jsp:include page="/components/CardStatusHome.jsp">
+                <jsp:param name="name" value="${status.getName()}" />
+                <jsp:param name="code" value="${status.getCode()}" />
               </jsp:include>
             </c:forEach>
           </div>

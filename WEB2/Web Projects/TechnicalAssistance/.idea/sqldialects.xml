@@ -3,10 +3,6 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/inserts.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/schema.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/br/edu/ifsp/arq/tsi/arqweb2/technicalassistance/model/dao/AddressDao.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/br/edu/ifsp/arq/tsi/arqweb2/technicalassistance/model/dao/CustomerDao.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/br/edu/ifsp/arq/tsi/arqweb2/technicalassistance/model/dao/OrderDao.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/br/edu/ifsp/arq/tsi/arqweb2/technicalassistance/model/dao/PaymentMethodDao.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/br/edu/ifsp/arq/tsi/arqweb2/technicalassistance/model/dao/StatusDao.java" dialect="GenericSQL" />
+    <file url="PROJECT" dialect="MySQL" />
   </component>
 </project>

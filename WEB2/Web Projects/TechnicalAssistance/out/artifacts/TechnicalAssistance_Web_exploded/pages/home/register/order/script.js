@@ -15,6 +15,7 @@ function validade() {
     });
 }
 
+
 function select_customer() {
     let inputs = document.getElementsByName('customer');
 

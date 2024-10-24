@@ -49,7 +49,7 @@ public class RegisterOrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         //Dados do Pedido
-        long code, statusCode, customerCode;
+        long statusCode, customerCode;
         double price;
         String description, observation;
         String paymentMethodCode;
@@ -58,7 +58,6 @@ public class RegisterOrderServlet extends HttpServlet {
         DataSource dataSource = DataSourceSearcher.getInstance().getDataSource();
 
         try {
-            code = Long.parseLong(req.getParameter("code"));
             description = req.getParameter("description");
             issueDate = LocalDate.parse(req.getParameter("issueDate"));
             endDate = LocalDate.parse(req.getParameter("endDate"));
@@ -87,7 +86,7 @@ public class RegisterOrderServlet extends HttpServlet {
         }
 
         StatusDao statusDao = new StatusDao(dataSource);
-        Optional<Status> statusOptional = statusDao.getStatusdByCode(statusCode);
+        Optional<Status> statusOptional = statusDao.getByCode(statusCode);
         if (statusOptional.isEmpty()) {
             dispatcherForward(req, resp, url, "error");
             return;
@@ -97,7 +96,6 @@ public class RegisterOrderServlet extends HttpServlet {
 
         Order order = new Order();
 
-        order.setCode((long) code);
         order.setDescription(description);
         order.setIssueDate(issueDate);
         order.setEndDate(endDate);
@@ -112,7 +110,6 @@ public class RegisterOrderServlet extends HttpServlet {
             return;
         }
 
-        dispatcherForward(req, resp, url,"success");
-    }
+        dispatcherForward(req, resp, "/home", "success");    }
 
 }

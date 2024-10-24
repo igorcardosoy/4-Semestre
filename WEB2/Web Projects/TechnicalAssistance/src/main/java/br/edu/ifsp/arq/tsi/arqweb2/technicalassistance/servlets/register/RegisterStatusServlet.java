@@ -27,10 +27,8 @@ public class RegisterStatusServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name;
-        long code;
 
         try {
-            code = Integer.parseInt(req.getParameter("code"));
             name = req.getParameter("name");
         } catch (NumberFormatException e) {
             dispatcherForward(req, resp, url, "error");
@@ -41,7 +39,6 @@ public class RegisterStatusServlet extends HttpServlet {
         StatusDao statusDao = new StatusDao(dataSource);
 
         Status status = new Status();
-        status.setCode(code);
         status.setName(name);
 
         if (!statusDao.save(status)) {
@@ -49,6 +46,6 @@ public class RegisterStatusServlet extends HttpServlet {
             return;
         }
 
-        dispatcherForward(req, resp, url, "success");
+        dispatcherForward(req, resp,"/home", "success");
     }
 }

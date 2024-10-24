@@ -26,11 +26,9 @@ public class RegisterPaymentMethodServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        int code;
         String name;
 
         try {
-            code = Integer.parseInt(req.getParameter("code"));
             name = req.getParameter("name");
         } catch (NumberFormatException e) {
             dispatcherForward(req, resp, url, "error");
@@ -38,8 +36,6 @@ public class RegisterPaymentMethodServlet extends HttpServlet {
         }
 
         PaymentMethod paymentMethod = new PaymentMethod();
-
-        paymentMethod.setCode((long) code);
         paymentMethod.setName(name);
 
         PaymentMethodDao paymentMethodDao = new PaymentMethodDao(DataSourceSearcher.getInstance().getDataSource());
@@ -49,8 +45,7 @@ public class RegisterPaymentMethodServlet extends HttpServlet {
             return;
         }
 
-            dispatcherForward(req, resp, url, "success");
-
+        dispatcherForward(req, resp, "/home", "success");
     }
 }
 

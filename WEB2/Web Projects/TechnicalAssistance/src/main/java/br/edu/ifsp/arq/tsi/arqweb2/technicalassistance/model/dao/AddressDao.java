@@ -18,15 +18,15 @@ public class AddressDao {
         this.dataSource = dataSource;
     }
 
-    public Optional<Address> getAddressById(Long id) {
-        String sql = "select * from ADDRESS where id = ?";
+    public Optional<Address> getByCode(Long code) {
+        String sql = "select * from address where code = ?";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setLong(1, id);
+            ps.setLong(1, code);
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
                 Address address = new Address();
-                address.setId(rs.getLong("id"));
+                address.setCode(rs.getLong("code"));
                 address.setStreet(rs.getString("street"));
                 address.setNumber(rs.getString("number"));
                 address.setComplement(rs.getString("complement"));
@@ -46,7 +46,7 @@ public class AddressDao {
     }
 
     public int getLastId() {
-        String sql = "select max(id) as id from ADDRESS";
+        String sql = "select max(code) as id from address";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ResultSet rs = ps.executeQuery();
@@ -62,16 +62,16 @@ public class AddressDao {
     }
 
     public Boolean update(Address address){
-        Optional<Address> optional = getAddressById(address.getId());
+        Optional<Address> optional = getByCode(address.getCode());
         if(optional.isEmpty()) {
             return false;
         }
 
-        String sql = "update ADDRESS set street=?, number=?, complement=?, neighborhood=?, city=?, state=?, zipcode=? where id=?";
+        String sql = "update address set street=?, number=?, complement=?, neighborhood=?, city=?, state=?, zipcode=? where code=?";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             createAddress(address, ps);
-            ps.setLong(8, address.getId());
+            ps.setLong(8, address.getCode());
             ps.executeUpdate();
         }catch (SQLException e) {
             e.printStackTrace();
@@ -80,16 +80,16 @@ public class AddressDao {
         return true;
     }
 
-    public Boolean delete(Long id){
-        Optional<Address> optional = getAddressById(id);
+    public Boolean delete(Long code){
+        Optional<Address> optional = getByCode(code);
         if(optional.isEmpty()) {
             return false;
         }
 
-        String sql = "delete from ADDRESS where id = ?";
+        String sql = "delete from address where code = ?";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setLong(1, id);
+            ps.setLong(1, code);
             ps.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException("Erro durante a escrita no BD", e);
@@ -98,12 +98,12 @@ public class AddressDao {
     }
 
     public Boolean save(Address address){
-        Optional<Address> optional = getAddressById(address.getId());
+        Optional<Address> optional = getByCode(address.getCode());
         if(optional.isPresent()) {
             return false;
         }
 
-        String sql = "insert into ADDRESS (street, number, complement, neighborhood, city, state, zipcode) values (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into address (street, number, complement, neighborhood, city, state, zipcode) values (?, ?, ?, ?, ?, ?, ?)";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             createAddress(address, ps);

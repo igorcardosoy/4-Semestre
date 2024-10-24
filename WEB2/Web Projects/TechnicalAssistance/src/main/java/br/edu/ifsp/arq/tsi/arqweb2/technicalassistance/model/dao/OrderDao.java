@@ -28,7 +28,7 @@ public class OrderDao {
     }
 
     public Optional<Order> getByCode(Long code) {
-        String sql = "select * from CUSTOMER_ORDER where code = ?";
+        String sql = "select * from customer_order where code = ?";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setLong(1, code);
@@ -41,7 +41,7 @@ public class OrderDao {
 
                 Optional<Customer> customer = customerDao.getByCode(rs.getLong("customer_code"));
                 Optional<PaymentMethod> paymentMethod = paymentMethodDao.getPaymentMethodByCode(rs.getLong("payment_method_code"));
-                Optional<Status> status = statusDao.getStatusdByCode(rs.getLong("status_code"));
+                Optional<Status> status = statusDao.getByCode(rs.getLong("status_code"));
 
                 if (customer.isEmpty() || paymentMethod.isEmpty() || status.isEmpty()) {
                     return Optional.empty();
@@ -56,7 +56,7 @@ public class OrderDao {
     }
 
     public List<Order> getAllByCustomerCode(Long customerCode){
-        String sql = "select * from CUSTOMER_ORDER where customer_code = ?";
+        String sql = "select * from customer_order where customer_code = ?";
         List<Order> orders = new LinkedList<>();
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
@@ -71,23 +71,18 @@ public class OrderDao {
     }
 
     public Boolean save(Order order){
-        Optional<Order> optional = getByCode(order.getCode());
-        if(optional.isPresent()) {
-            return false;
-        }
 
-        String sql = "insert into CUSTOMER_ORDER(code, description, price, issue_date, end_date, customer_code, payment_method_code, status_code, observation) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into customer_order(description, price, issue_date, end_date, customer_code, payment_method_code, status_code, observation) values(?, ?, ?, ?, ?, ?, ?, ?)";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setLong(1, order.getCode());
-            ps.setString(2, order.getDescription());
-            ps.setDouble(3, order.getPrice());
-            ps.setDate(4, Date.valueOf(order.getIssueDate()));
-            ps.setDate(5, Date.valueOf(order.getEndDate()));
-            ps.setLong(6, order.getCustomer().getCode());
-            ps.setLong(7, order.getPaymentMethod().getCode());
-            ps.setLong(8, order.getStatus().getCode());
-            ps.setString(9, order.getObservation());
+            ps.setString(1, order.getDescription());
+            ps.setDouble(2, order.getPrice());
+            ps.setDate(3, Date.valueOf(order.getIssueDate()));
+            ps.setDate(4, Date.valueOf(order.getEndDate()));
+            ps.setLong(5, order.getCustomer().getCode());
+            ps.setLong(6, order.getPaymentMethod().getCode());
+            ps.setLong(7, order.getStatus().getCode());
+            ps.setString(8, order.getObservation());
             ps.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException("Erro durante a escrita no BD", e);
@@ -101,7 +96,7 @@ public class OrderDao {
             return false;
         }
 
-        String sql = "update CUSTOMER_ORDER set description = ?, price = ?, issue_date = ?, end_date = ?, customer_code = ?, payment_method_code = ?, status_code = ?, observation = ? where code = ?";
+        String sql = "update customer_order set description = ?, price = ?, issue_date = ?, end_date = ?, customer_code = ?, payment_method_code = ?, status_code = ?, observation = ? where code = ?";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, order.getDescription());
@@ -128,7 +123,7 @@ public class OrderDao {
             return false;
         }
 
-        String sql = "delete from CUSTOMER_ORDER where code = ?";
+        String sql = "delete from customer_order where code = ?";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setLong(1, code);
@@ -141,7 +136,7 @@ public class OrderDao {
 
     public List<Order> getAll() {
         List<Order> orders = new LinkedList<>();
-        String sql = "select * from CUSTOMER_ORDER";
+        String sql = "select * from customer_order";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery()){
@@ -158,7 +153,7 @@ public class OrderDao {
         while(rs.next()) {
             Optional<Customer> customer = customerDao.getByCode(rs.getLong("customer_code"));
             Optional<PaymentMethod> paymentMethod = paymentMethodDao.getPaymentMethodByCode(rs.getLong("payment_method_code"));
-            Optional<Status> status = statusDao.getStatusdByCode(rs.getLong("status_code"));
+            Optional<Status> status = statusDao.getByCode(rs.getLong("status_code"));
 
             if (customer.isEmpty() || paymentMethod.isEmpty() || status.isEmpty()) {
                 return false;

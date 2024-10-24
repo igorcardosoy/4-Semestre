@@ -28,11 +28,10 @@ public class RegisterCustomerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        int code; String cpf; String name, email, phone; // Dados do cliente
+        String cpf; String name, email, phone; // Dados do cliente
         int zipcode; String number, street, neighborhood, city, state, complement; // Dados do endereço do cliente
 
         try{
-            code = Integer.parseInt(req.getParameter("code"));
             name = req.getParameter("name");
             email = req.getParameter("email");
             phone = req.getParameter("phone");
@@ -42,7 +41,7 @@ public class RegisterCustomerServlet extends HttpServlet {
             neighborhood = req.getParameter("neighborhood");
             city = req.getParameter("city");
             state = req.getParameter("state");
-            zipcode = Integer.parseInt(req.getParameter("zipcode"));
+            zipcode = Integer.parseInt(req.getParameter("zipcode").replace("-", ""));
             complement = req.getParameter("complement");
         } catch (NumberFormatException e) {
             dispatcherForward(req, resp, url,"error");
@@ -61,7 +60,6 @@ public class RegisterCustomerServlet extends HttpServlet {
 
         Customer customer = new Customer();
 
-        customer.setCode(code);
         customer.setName(name);
         customer.setEmail(email);
         customer.setPhone(phone);
@@ -71,7 +69,7 @@ public class RegisterCustomerServlet extends HttpServlet {
         CustomerDao customerDao = new CustomerDao(DataSourceSearcher.getInstance().getDataSource());
         AddressDao addressDao = new AddressDao(DataSourceSearcher.getInstance().getDataSource());
 
-        address.setId(addressDao.getLastId() + 1L);
+        address.setCode(addressDao.getLastId() + 1L);
 
         if (!addressDao.save(address)) {
             dispatcherForward(req, resp, url,"error");
@@ -83,6 +81,5 @@ public class RegisterCustomerServlet extends HttpServlet {
             return;
         }
 
-        dispatcherForward(req, resp, url,"success");
-    }
+        dispatcherForward(req, resp, "/home", "success");    }
 }

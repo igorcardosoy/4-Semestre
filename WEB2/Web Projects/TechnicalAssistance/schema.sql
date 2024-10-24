@@ -1,64 +1,69 @@
-DROP DATABASE IF EXISTS TechnicalAssistance;
+DROP DATABASE IF EXISTS technical_assistance;
 
-CREATE DATABASE TechnicalAssistance;
+CREATE DATABASE technical_assistance;
 
-USE TechnicalAssistance;
+USE technical_assistance;
 
 
-CREATE TABLE ADDRESS (
-    ID INT PRIMARY KEY AUTO_INCREMENT,
-    STREET VARCHAR(60) NOT NULL,
-    NUMBER VARCHAR(10) NOT NULL,
-    COMPLEMENT VARCHAR(50),
-    NEIGHBORHOOD VARCHAR(30) NOT NULL,
-    CITY VARCHAR(25) NOT NULL,
-    STATE VARCHAR(25) NOT NULL,
-    ZIPCODE VARCHAR(9) NOT NULL
+CREATE TABLE address
+(
+    code         bigint      NOT NULL PRIMARY KEY auto_increment,
+    street       VARCHAR(60) NOT NULL,
+    number       VARCHAR(10) NOT NULL,
+    complement   VARCHAR(50),
+    neighborhood VARCHAR(30) NOT NULL,
+    city         VARCHAR(25) NOT NULL,
+    STATE        VARCHAR(25) NOT NULL,
+    zipcode      VARCHAR(9)  NOT NULL
 );
 
-CREATE TABLE CUSTOMER (
-  ID INT PRIMARY KEY AUTO_INCREMENT,
-  CODE BIGINT NOT NULL UNIQUE,
-  NAME VARCHAR(100) NOT NULL,
-  EMAIL VARCHAR(100) NOT NULL,
-  PHONE VARCHAR(20) NOT NULL,
-  CPF VARCHAR(14) NOT NULL,
-  ADDRESS_ID INT NOT NULL,
+CREATE TABLE customer
+(
+    code         bigint       NOT NULL PRIMARY KEY auto_increment,
+    name         VARCHAR(100) NOT NULL,
+    email        VARCHAR(100) NOT NULL,
+    phone        VARCHAR(20)  NOT NULL,
+    cpf          VARCHAR(14)  NOT NULL,
+    address_code bigint       NOT NULL,
 
-  FOREIGN KEY (ADDRESS_ID) REFERENCES ADDRESS(ID)
+    FOREIGN KEY (address_code) REFERENCES address (code)
 );
 
-CREATE TABLE PAYMENT_METHOD (
-    ID INT PRIMARY KEY AUTO_INCREMENT,
-    CODE BIGINT NOT NULL UNIQUE,
-    NAME VARCHAR(50) NOT NULL
+CREATE TABLE payment_method
+(
+    code bigint      NOT NULL PRIMARY KEY auto_increment,
+    name VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE ORDER_STATUS (
-    ID INT PRIMARY KEY AUTO_INCREMENT,
-    CODE BIGINT NOT NULL UNIQUE,
-    NAME VARCHAR(50) NOT NULL UNIQUE
+CREATE TABLE order_status
+(
+    code bigint      NOT NULL PRIMARY KEY auto_increment,
+    name VARCHAR(50) NOT NULL UNIQUE
 );
 
-CREATE TABLE CUSTOMER_ORDER (
-    ID INT PRIMARY KEY AUTO_INCREMENT,
-    CODE BIGINT NOT NULL UNIQUE,
-    DESCRIPTION VARCHAR(100) NOT NULL,
-    ISSUE_DATE DATE NOT NULL,
-    END_DATE DATE NOT NULL,
-    PRICE DECIMAL(10,2) NOT NULL,
-    CUSTOMER_CODE BIGINT NOT NULL,
-    PAYMENT_METHOD_CODE BIGINT NOT NULL,
-    STATUS_CODE BIGINT NOT NULL,
-    OBSERVATION VARCHAR(200),
+CREATE TABLE customer_order
+(
+    code                bigint         NOT NULL PRIMARY KEY auto_increment,
+    description         VARCHAR(100)   NOT NULL,
+    issue_date          DATE           NOT NULL,
+    end_date            DATE           NOT NULL,
+    price               DECIMAL(10, 2) NOT NULL,
+    customer_code       bigint         NOT NULL,
+    payment_method_code bigint         NOT NULL,
+    status_code         bigint         NOT NULL,
+    observation         VARCHAR(200),
 
-    FOREIGN KEY (CUSTOMER_CODE) REFERENCES CUSTOMER(CODE),
-    FOREIGN KEY (PAYMENT_METHOD_CODE) REFERENCES PAYMENT_METHOD(CODE),
-    FOREIGN KEY (STATUS_CODE) REFERENCES ORDER_STATUS(CODE)
+    FOREIGN KEY (customer_code) REFERENCES customer (code),
+    FOREIGN KEY (payment_method_code) REFERENCES payment_method (code),
+    FOREIGN KEY (status_code) REFERENCES order_status (code)
 );
 
 
-SELECT * FROM CUSTOMER;
-SELECT * FROM ADDRESS;
-SELECT * FROM ORDER_STATUS;
-SELECT * FROM CUSTOMER_ORDER;
+SELECT *
+FROM customer;
+SELECT *
+FROM address;
+SELECT *
+FROM order_status;
+SELECT *
+FROM customer_order;
