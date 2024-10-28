@@ -17,18 +17,21 @@
         <list>
           <option value="IFitness" />
           <option value="IFitness" />
+          <option value="IFitness" />
         </list>
       </option>
       <option name="ignoredPackages">
         <list>
           <option value="org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.0" />
           <option value="org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1" />
+          <option value="com.google.protobuf:protobuf-java:3.21.9" />
         </list>
       </option>
       <option name="ignoredReasons">
         <list>
           <option value="Not exploitable" />
           <option value="Fixed in branch" />
+          <option value="Not exploitable" />
         </list>
       </option>
     </inspection_tool>

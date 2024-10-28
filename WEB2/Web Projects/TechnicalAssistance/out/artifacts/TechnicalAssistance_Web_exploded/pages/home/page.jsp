@@ -1,7 +1,3 @@
-<%@ page import="java.util.List" %>
-<%@ page import="br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.Status" %>
-<%@ page import="br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.dao.StatusDao" %>
-<%@ page import="br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.util.DataSourceSearcher" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>

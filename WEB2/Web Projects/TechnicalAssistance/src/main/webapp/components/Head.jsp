@@ -5,7 +5,7 @@
 <link href="${pageContext.request.contextPath}/images/favicon.svg" rel="icon" type="image/svg+xml">
 
 <!-- DayseUI CSS -->
-<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.12/dist/full.min.css" rel="stylesheet" type="text/css" />
-<script src="https://cdn.tailwindcss.com"></script>
+<link href="${pageContext.request.contextPath}/lib/daisyui.css" rel="stylesheet" type="text/css" />
+<script src="${pageContext.request.contextPath}/lib/tailwind.js"></script>
 
 <title>${param.title}</title>
