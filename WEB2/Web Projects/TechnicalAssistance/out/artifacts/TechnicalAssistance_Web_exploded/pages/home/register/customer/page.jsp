@@ -153,7 +153,9 @@
 							</div>
 						</div>
 
-						<jsp:include page="/components/ConfirmButtons.jsp"/>
+						<jsp:include page="/components/ConfirmButtons.jsp">
+							<jsp:param name="path" value="home/view/customer" />
+						</jsp:include>
 
 					</form>
 				</div>

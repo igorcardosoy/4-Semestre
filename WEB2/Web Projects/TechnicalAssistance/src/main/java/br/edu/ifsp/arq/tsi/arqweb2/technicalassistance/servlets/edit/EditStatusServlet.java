@@ -56,6 +56,6 @@ public class EditStatusServlet extends HttpServlet {
             return;
         }
 
-        Util.dispatcherForward(req, resp, "/home", "success");
+        Util.dispatcherForward(req, resp, "/home/view/status", "success");
     }
 }

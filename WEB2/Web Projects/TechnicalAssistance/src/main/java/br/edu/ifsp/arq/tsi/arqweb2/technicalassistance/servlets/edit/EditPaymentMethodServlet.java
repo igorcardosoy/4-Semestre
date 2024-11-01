@@ -41,14 +41,14 @@ public class EditPaymentMethodServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int code = Integer.parseInt(req.getParameter("code"));
+        long code = Long.parseLong(req.getParameter("code"));
         String name = req.getParameter("name");
 
         DataSource dataSource = DataSourceSearcher.getInstance().getDataSource();
         PaymentMethodDao paymentMethodDao = new PaymentMethodDao(dataSource);
 
         PaymentMethod paymentMethod = new PaymentMethod();
-        paymentMethod.setCode((long) code);
+        paymentMethod.setCode(code);
         paymentMethod.setName(name);
 
         if (!paymentMethodDao.update(paymentMethod)) {
@@ -56,6 +56,6 @@ public class EditPaymentMethodServlet extends HttpServlet {
             return;
         }
 
-        Util.dispatcherForward(req, resp, "/home", "success");
+        Util.dispatcherForward(req, resp, "/home/view/payment-method", "success");
     }
 }

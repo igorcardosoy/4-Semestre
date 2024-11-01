@@ -167,7 +167,9 @@
               <textarea class="textarea textarea-bordered w-96 max-h-56" placeholder="Observações" name="observation">${order.getObservation()}</textarea>
             </label>
 
-            <jsp:include page="/components/ConfirmButtons.jsp"/>
+            <jsp:include page="/components/ConfirmButtons.jsp">
+              <jsp:param name="path" value="home/view/order" />
+            </jsp:include>
 
           </div>
         </div>

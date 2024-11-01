@@ -79,6 +79,6 @@ public class EditCustomerServlet extends HttpServlet {
             return;
         }
 
-        dispatcherForward(req, resp, "/home", "success");
+        dispatcherForward(req, resp, "/home/view/customer", "success");
     }
 }

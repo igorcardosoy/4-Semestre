@@ -110,6 +110,6 @@ public class RegisterOrderServlet extends HttpServlet {
             return;
         }
 
-        dispatcherForward(req, resp, "/home", "success");    }
+        dispatcherForward(req, resp, "/home/view/order", "success");    }
 
 }

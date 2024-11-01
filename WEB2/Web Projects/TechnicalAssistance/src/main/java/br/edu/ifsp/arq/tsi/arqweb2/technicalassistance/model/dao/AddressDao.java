@@ -19,14 +19,14 @@ public class AddressDao {
     }
 
     public Optional<Address> getByCode(Long code) {
-        String sql = "select * from address where code = ?";
+        String sql = "select * from address where address_code = ?";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setLong(1, code);
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
                 Address address = new Address();
-                address.setCode(rs.getLong("code"));
+                address.setCode(rs.getLong("address_code"));
                 address.setStreet(rs.getString("street"));
                 address.setNumber(rs.getString("number"));
                 address.setComplement(rs.getString("complement"));
@@ -67,7 +67,7 @@ public class AddressDao {
             return false;
         }
 
-        String sql = "update address set street=?, number=?, complement=?, neighborhood=?, city=?, state=?, zipcode=? where code=?";
+        String sql = "update address set street=?, number=?, complement=?, neighborhood=?, city=?, state=?, zipcode=? where address_code=?";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             createAddress(address, ps);
@@ -86,7 +86,7 @@ public class AddressDao {
             return false;
         }
 
-        String sql = "delete from address where code = ?";
+        String sql = "delete from address where address_code = ?";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setLong(1, code);

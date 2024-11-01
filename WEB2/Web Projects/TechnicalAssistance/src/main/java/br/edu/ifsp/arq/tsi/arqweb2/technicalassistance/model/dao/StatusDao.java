@@ -21,14 +21,14 @@ public class StatusDao {
 
     public Optional<Status> getByCode(Long code) {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT * FROM order_status WHERE code = ?";
+            String sql = "SELECT * FROM status WHERE status_code = ?";
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setLong(1, code);
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
                         Status status = new Status();
-                        status.setCode(rs.getLong("code"));
-                        status.setName(rs.getString("name"));
+                        status.setCode(rs.getLong(1));
+                        status.setName(rs.getString(2));
                         return Optional.of(status);
                     }
                 }
@@ -40,7 +40,7 @@ public class StatusDao {
     }
 
     public Boolean save(Status status) throws RuntimeException {
-        String sql = "INSERT INTO order_status (name) VALUES (?)";
+        String sql = "INSERT INTO status (name) VALUES (?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, status.getName());
@@ -55,14 +55,14 @@ public class StatusDao {
 
     public List<Status> getAllStatuses() {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT * FROM order_status";
+            String sql = "SELECT * FROM status";
             try (PreparedStatement ps = connection.prepareStatement(sql);
                  ResultSet rs = ps.executeQuery()) {
                 List<Status> statuses = new LinkedList<>();
                 while (rs.next()) {
                     Status status = new Status();
-                    status.setCode(rs.getLong("code"));
-                    status.setName(rs.getString("name"));
+                    status.setCode(rs.getLong(1));
+                    status.setName(rs.getString(2));
                     statuses.add(status);
                 }
                 return statuses;
@@ -74,12 +74,7 @@ public class StatusDao {
     }
 
     public Boolean update(Status status) {
-        Optional<Status> optional = getByCode(status.getCode());
-        if (optional.isEmpty()) {
-            return false;
-        }
-
-        String sql = "UPDATE order_status SET name = ? WHERE code = ?";
+        String sql = "UPDATE status SET name=? WHERE status_code=?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, status.getName());
@@ -97,7 +92,7 @@ public class StatusDao {
         Optional<Status> optional = getByCode(code);
         if (optional.isEmpty()) return false;
 
-        String sql = "DELETE FROM order_status WHERE code = ?";
+        String sql = "DELETE FROM status WHERE status_code = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setLong(1, code);

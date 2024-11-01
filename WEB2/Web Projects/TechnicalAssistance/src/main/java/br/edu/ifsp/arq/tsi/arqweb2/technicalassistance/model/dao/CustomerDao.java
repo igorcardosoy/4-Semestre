@@ -19,7 +19,7 @@ public class CustomerDao {
     }
 
     public Optional<Customer> getByCode(Long customerCode) {
-        String sql = "select code, name, email, phone, cpf, address_code from customer where code=?";
+        String sql = "select customer_code, name, email, phone, cpf, address_code from customer where customer_code=?";
         Optional<Customer> optional;
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
@@ -32,7 +32,7 @@ public class CustomerDao {
     }
 
     public Optional<Customer> getByEmail(String email){
-        String sql = "select code, name, email, phone, cpf, address_code from customer where email=?";
+        String sql = "select customer_code, name, email, phone, cpf, address_code from customer where email=?";
         Optional<Customer> optional;
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
@@ -77,7 +77,7 @@ public class CustomerDao {
                             phone = ?,
                             cpf = ?,
                             address_code = ?
-                        where code = ?""";
+                        where customer_code = ?""";
 
         try (Connection conn = dataSource.getConnection()){
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -99,7 +99,7 @@ public class CustomerDao {
     public Boolean delete(Long code) {
         Optional<Customer> optional = getByCode(code);
         if (optional.isEmpty()) return false;
-        String sql = "delete from customer where code = ?";
+        String sql = "delete from customer where customer_code = ?";
 
         try (Connection conn = dataSource.getConnection()){
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -118,7 +118,7 @@ public class CustomerDao {
         try {
             Connection conn = dataSource.getConnection();
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("select code, name, email, phone, cpf, address_code from customer");
+            ResultSet rs = stmt.executeQuery("select customer_code, name, email, phone, cpf, address_code from customer");
             while (rs.next()) {
                 Customer customer = creatCustomer(rs);
                 if (customer == null) continue;

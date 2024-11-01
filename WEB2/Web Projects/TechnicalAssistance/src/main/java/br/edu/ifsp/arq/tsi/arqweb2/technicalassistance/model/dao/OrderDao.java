@@ -28,7 +28,7 @@ public class OrderDao {
     }
 
     public Optional<Order> getByCode(Long code) {
-        String sql = "select * from customer_order where code = ?";
+        String sql = "select * from customer_order where customer_order_code = ?";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setLong(1, code);
@@ -96,7 +96,7 @@ public class OrderDao {
             return false;
         }
 
-        String sql = "update customer_order set description = ?, price = ?, issue_date = ?, end_date = ?, customer_code = ?, payment_method_code = ?, status_code = ?, observation = ? where code = ?";
+        String sql = "update customer_order set description = ?, price = ?, issue_date = ?, end_date = ?, customer_code = ?, payment_method_code = ?, status_code = ?, observation = ? where customer_order_code = ?";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, order.getDescription());
@@ -123,7 +123,7 @@ public class OrderDao {
             return false;
         }
 
-        String sql = "delete from customer_order where code = ?";
+        String sql = "delete from customer_order where customer_order_code = ?";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setLong(1, code);
@@ -172,7 +172,7 @@ public class OrderDao {
 
     private Optional<Order> createOrder(ResultSet rs, Customer customer, PaymentMethod paymentMethod, Status status) throws SQLException {
         Order order = new Order();
-        order.setCode(rs.getLong("code"));
+        order.setCode(rs.getLong("customer_order_code"));
         order.setDescription(rs.getString("description"));
         order.setPrice(rs.getDouble("price"));
         order.setIssueDate(rs.getDate("issue_date").toLocalDate());

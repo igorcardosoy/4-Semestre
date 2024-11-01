@@ -27,7 +27,7 @@
         <jsp:include page="/components/ErrorAlert.jsp"/>
       </c:when>
     </c:choose>
-      <form id="form" action="${pageContext.request.contextPath}/home/register/status" method="post" class="mt-5">
+      <form id="form" action="${pageContext.request.contextPath}/home/${action}/status" method="post" class="mt-5">
         <h1 class="text-center ">Cadastro de Status</h1>
 
         <div class="flex gap-3 mt-5 justify-center">
@@ -46,7 +46,9 @@
         </div>
 
 
-        <jsp:include page="/components/ConfirmButtons.jsp"/>
+        <jsp:include page="/components/ConfirmButtons.jsp">
+          <jsp:param name="path" value="home/view/status" />
+        </jsp:include>
 
       </form>
     </div>

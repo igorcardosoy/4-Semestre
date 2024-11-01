@@ -21,14 +21,14 @@ public class PaymentMethodDao {
 
     public Optional<PaymentMethod> getPaymentMethodByCode(Long code) {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT * FROM payment_method WHERE code = ?";
+            String sql = "SELECT * FROM payment_method WHERE payment_method_code = ?";
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setLong(1, code);
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
                         PaymentMethod paymentMethod = new PaymentMethod();
-                        paymentMethod.setCode(rs.getLong("code"));
-                        paymentMethod.setName(rs.getString("name"));
+                        paymentMethod.setCode(rs.getLong(1));
+                        paymentMethod.setName(rs.getString(2));
                         return Optional.of(paymentMethod);
                     }
                 }
@@ -62,8 +62,8 @@ public class PaymentMethodDao {
                  ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     PaymentMethod paymentMethod = new PaymentMethod();
-                    paymentMethod.setCode(rs.getLong("code"));
-                    paymentMethod.setName(rs.getString("name"));
+                    paymentMethod.setCode(rs.getLong(1));
+                    paymentMethod.setName(rs.getString(2));
                     paymentMethods.add(paymentMethod);
                 }
             }
@@ -76,18 +76,13 @@ public class PaymentMethodDao {
     }
 
     public Boolean update(PaymentMethod paymentMethod){
-        Optional<PaymentMethod> optional = getPaymentMethodByCode(paymentMethod.getCode());
-        if(optional.isEmpty()) {
-            return false;
-        }
-
-        String sql = "update payment_method set name=? where code=?";
+        String sql = "update payment_method set name=? where payment_method_code=?";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, paymentMethod.getName());
             ps.setLong(2, paymentMethod.getCode());
             ps.executeUpdate();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
@@ -100,7 +95,7 @@ public class PaymentMethodDao {
             return false;
         }
 
-        String sql = "delete from payment_method where code = ?";
+        String sql = "delete from payment_method where payment_method_code = ?";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setLong(1, code);

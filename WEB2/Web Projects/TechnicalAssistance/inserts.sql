@@ -1,4 +1,4 @@
-INSERT INTO +address (street, number, complement, neighborhood, city, state, zipcode)
+INSERT INTO address (street, number, complement, neighborhood, city, state, zipcode)
 VALUES ('Av. Paulista', '1000', 'Apt 101', 'Bela Vista', 'São Paulo', 'SP', '01311-000');
 INSERT INTO address (street, number, complement, neighborhood, city, state, zipcode)
 VALUES ('Rua dos Bobos', '0', NULL, 'Centro', 'Campinas', 'SP', '13010-000');
@@ -43,14 +43,14 @@ INSERT INTO payment_method (name) VALUES ('PayPal');
 INSERT INTO payment_method (name) VALUES ('Cheque');
 
 
-INSERT INTO order_status (name) VALUES ('Aberto');
-INSERT INTO order_status (name) VALUES ('Em andamento');
-INSERT INTO order_status (name) VALUES ('Concluído');
-INSERT INTO order_status (name) VALUES ('Cancelado');
-INSERT INTO order_status (name) VALUES ('Aguardando pagamento');
-INSERT INTO order_status (name) VALUES ('Pago');
-INSERT INTO order_status (name) VALUES ('Reembolsado');
-INSERT INTO order_status (name) VALUES ('Aguardando peças');
+INSERT INTO status (name) VALUES ('Aberto');
+INSERT INTO status (name) VALUES ('Em andamento');
+INSERT INTO status (name) VALUES ('Concluído');
+INSERT INTO status (name) VALUES ('Cancelado');
+INSERT INTO status (name) VALUES ('Aguardando pagamento');
+INSERT INTO status (name) VALUES ('Pago');
+INSERT INTO status (name) VALUES ('Reembolsado');
+INSERT INTO status (name) VALUES ('Aguardando peças');
 
 INSERT INTO customer_order (description, issue_date, end_date, price, customer_code, payment_method_code, status_code, observation)
 VALUES ('Reparo de notebook', '2024-10-01', '2024-10-05', 350.00, 1, 1, 1, 'Problema de superaquecimento');
