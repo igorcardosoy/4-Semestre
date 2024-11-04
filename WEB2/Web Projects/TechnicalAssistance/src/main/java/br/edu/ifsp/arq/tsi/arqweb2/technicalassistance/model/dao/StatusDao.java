@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +47,7 @@ public class StatusDao {
             ps.setString(1, status.getName());
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao salvar o status: " + e.getMessage() + Arrays.toString(e.getStackTrace()));
             return false;
         }
 
@@ -68,7 +69,7 @@ public class StatusDao {
                 return statuses;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao buscar os status: " + e.getMessage() + Arrays.toString(e.getStackTrace()));
             return List.of();
         }
     }
@@ -81,7 +82,7 @@ public class StatusDao {
             ps.setLong(2, status.getCode());
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao atualizar o status: " + e.getMessage() + Arrays.toString(e.getStackTrace()));
             return false;
         }
 
@@ -98,7 +99,7 @@ public class StatusDao {
             ps.setLong(1, code);
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao deletar o status: " + e.getMessage() + Arrays.toString(e.getStackTrace()));
             return false;
         }
 

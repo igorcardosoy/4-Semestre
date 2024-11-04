@@ -5,7 +5,6 @@ import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.Customer;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.dao.AddressDao;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.dao.CustomerDao;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.util.DataSourceSearcher;
-import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets.Util;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

@@ -19,26 +19,27 @@ import static br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets.Util.disp
 @WebServlet("/home/delete/customer")
 public class DeleteCustomerServlet extends HttpServlet {
 
+    String url = "/home/view/customer/page.jsp";
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int code = Integer.parseInt(req.getParameter("code"));
+        long code = Integer.parseInt(req.getParameter("code"));
 
          DataSource dataSource = DataSourceSearcher.getInstance().getDataSource();
          CustomerDao customerDao = new CustomerDao(dataSource);
         AddressDao addressDao = new AddressDao(dataSource);
 
-        Optional<Customer> customer = customerDao.getByCode((long) code);
-
+        Optional<Customer> customer = customerDao.getByCode(code);
         if (customer.isEmpty()) {
-            dispatcherForward(req, resp, "/home", "error");
+            dispatcherForward(req, resp, url, "error");
             return;
         }
 
-         if (!customerDao.delete((long) code) || !addressDao.delete(customer.get().getAddress().getCode())) {
-             dispatcherForward(req, resp, "/home", "error");
+         if (!customerDao.delete(code) || !addressDao.delete(customer.get().getAddress().getCode())) {
+             dispatcherForward(req, resp, url, "error");
              return;
          }
 
-        dispatcherForward(req, resp, "/home", "success");
+        dispatcherForward(req, resp, url, "success");
     }
 }

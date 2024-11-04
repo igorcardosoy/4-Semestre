@@ -6,6 +6,7 @@ import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.Customer;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,7 +61,7 @@ public class CustomerDao {
             ps.setLong(5, customer.getAddress().getCode());
             ps.executeUpdate();
         }catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao salvar o cliente: " + e.getMessage() + Arrays.toString(e.getStackTrace()));
             return false;
         }
         return true;
@@ -89,7 +90,7 @@ public class CustomerDao {
              ps.setLong(6, customer.getCode());
              ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao atualizar o cliente: " + e.getMessage() + Arrays.toString(e.getStackTrace()));
             return false;
         }
 
@@ -106,7 +107,7 @@ public class CustomerDao {
              ps.setLong(1, code);
              ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao deletar o cliente: " + e.getMessage() + Arrays.toString(e.getStackTrace()));
             return false;
         }
 
@@ -126,7 +127,7 @@ public class CustomerDao {
                 customers.add(Optional.of(customer));
             }
         } catch (RuntimeException | SQLException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao buscar todos os clientes: " + e.getMessage() + Arrays.toString(e.getStackTrace()));
             return List.of();
         }
 

@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Optional;
 
 public class AddressDao {
@@ -37,7 +38,7 @@ public class AddressDao {
                 return Optional.of(address);
             }
         }catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao buscar o endereço: " + e.getMessage() + Arrays.toString(e.getStackTrace()));
             return Optional.empty();
         }
 
@@ -46,7 +47,7 @@ public class AddressDao {
     }
 
     public int getLastId() {
-        String sql = "select max(code) as id from address";
+        String sql = "select max(address_code) as id from address";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
             ResultSet rs = ps.executeQuery();
@@ -54,7 +55,7 @@ public class AddressDao {
                 return rs.getInt("id");
             }
         }catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao buscar o último id: " + e.getMessage() + Arrays.toString(e.getStackTrace()));
             return 0;
         }
 
@@ -74,7 +75,7 @@ public class AddressDao {
             ps.setLong(8, address.getCode());
             ps.executeUpdate();
         }catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao atualizar o endereço: " + e.getMessage() + Arrays.toString(e.getStackTrace()));
             return false;
         }
         return true;
@@ -92,7 +93,8 @@ public class AddressDao {
             ps.setLong(1, code);
             ps.executeUpdate();
         }catch (SQLException e) {
-            throw new RuntimeException("Erro durante a escrita no BD", e);
+            System.err.println("Erro ao deletar o endereço: " + e.getMessage() + Arrays.toString(e.getStackTrace()));
+            return false;
         }
         return true;
     }
@@ -109,7 +111,7 @@ public class AddressDao {
             createAddress(address, ps);
             ps.executeUpdate();
         }catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao salvar o endereço: " + e.getMessage() + Arrays.toString(e.getStackTrace()));
             return false;
         }
 

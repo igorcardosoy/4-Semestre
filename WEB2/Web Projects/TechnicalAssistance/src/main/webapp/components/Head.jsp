@@ -5,7 +5,8 @@
 <link href="${pageContext.request.contextPath}/images/favicon.svg" rel="icon" type="image/svg+xml">
 
 <!-- DayseUI CSS -->
-<link href="${pageContext.request.contextPath}/lib/daisyui.css" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/lib/tailwind.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
 
 <title>${param.title}</title>

@@ -7,6 +7,7 @@ import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.Status;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -75,14 +76,7 @@ public class OrderDao {
         String sql = "insert into customer_order(description, price, issue_date, end_date, customer_code, payment_method_code, status_code, observation) values(?, ?, ?, ?, ?, ?, ?, ?)";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setString(1, order.getDescription());
-            ps.setDouble(2, order.getPrice());
-            ps.setDate(3, Date.valueOf(order.getIssueDate()));
-            ps.setDate(4, Date.valueOf(order.getEndDate()));
-            ps.setLong(5, order.getCustomer().getCode());
-            ps.setLong(6, order.getPaymentMethod().getCode());
-            ps.setLong(7, order.getStatus().getCode());
-            ps.setString(8, order.getObservation());
+            creatOrder(order, ps);
             ps.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException("Erro durante a escrita no BD", e);
@@ -99,22 +93,26 @@ public class OrderDao {
         String sql = "update customer_order set description = ?, price = ?, issue_date = ?, end_date = ?, customer_code = ?, payment_method_code = ?, status_code = ?, observation = ? where customer_order_code = ?";
         try(Connection conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setString(1, order.getDescription());
-            ps.setDouble(2, order.getPrice());
-            ps.setDate(3, Date.valueOf(order.getIssueDate()));
-            ps.setDate(4, Date.valueOf(order.getEndDate()));
-            ps.setLong(5, order.getCustomer().getCode());
-            ps.setLong(6, order.getPaymentMethod().getCode());
-            ps.setLong(7, order.getStatus().getCode());
-            ps.setString(8, order.getObservation());
+            creatOrder(order, ps);
             ps.setLong(9, order.getCode());
             ps.executeUpdate();
         }catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao atualizar o pedido: " + e.getMessage() + Arrays.toString(e.getStackTrace()));
             return false;
         }
 
         return true;
+    }
+
+    private void creatOrder(Order order, PreparedStatement ps) throws SQLException {
+        ps.setString(1, order.getDescription());
+        ps.setDouble(2, order.getPrice());
+        ps.setDate(3, Date.valueOf(order.getIssueDate()));
+        ps.setDate(4, Date.valueOf(order.getEndDate()));
+        ps.setLong(5, order.getCustomer().getCode());
+        ps.setLong(6, order.getPaymentMethod().getCode());
+        ps.setLong(7, order.getStatus().getCode());
+        ps.setString(8, order.getObservation());
     }
 
     public Boolean delete(Long code){
@@ -129,7 +127,7 @@ public class OrderDao {
             ps.setLong(1, code);
             ps.executeUpdate();
         }catch (SQLException e) {
-            throw new RuntimeException("Erro durante a escrita no BD", e);
+            System.err.println("Erro ao deletar o pedido: " + e.getMessage() + Arrays.toString(e.getStackTrace()));
         }
         return true;
     }
@@ -142,7 +140,7 @@ public class OrderDao {
             ResultSet rs = ps.executeQuery()){
             if (!getOrders(orders, rs)) return List.of();
         }catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao buscar todos os pedidos: " + e.getMessage() + Arrays.toString(e.getStackTrace()));
             return List.of();
         }
 

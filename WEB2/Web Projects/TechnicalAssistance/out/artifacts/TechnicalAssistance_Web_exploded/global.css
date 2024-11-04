@@ -1,6 +1,7 @@
+@import "lib/daisyui.css";
+
 html, body{
     min-height: 100svh;
     width: 100svw;
-
-    background-color: #1b2026;
+    background-color: oklch(var(--b3));
 }

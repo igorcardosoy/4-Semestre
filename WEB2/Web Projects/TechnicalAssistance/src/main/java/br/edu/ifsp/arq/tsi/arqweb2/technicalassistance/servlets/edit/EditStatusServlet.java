@@ -1,8 +1,6 @@
 package br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets.edit;
 
-import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.PaymentMethod;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.Status;
-import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.dao.PaymentMethodDao;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.dao.StatusDao;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.model.util.DataSourceSearcher;
 import br.edu.ifsp.arq.tsi.arqweb2.technicalassistance.servlets.Util;
