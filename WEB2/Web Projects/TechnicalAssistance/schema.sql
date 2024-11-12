@@ -29,6 +29,15 @@ CREATE TABLE customer
     FOREIGN KEY (address_code) REFERENCES address (address_code)
 );
 
+CREATE TABLE employee
+(
+    employee_code bigint NOT NULL PRIMARY KEY auto_increment,
+    name         VARCHAR(100) NOT NULL,
+    cpf          VARCHAR(14)  NOT NULL,
+    email        VARCHAR(100) NOT NULL,
+    password     VARCHAR(100)  NOT NULL
+);
+
 CREATE TABLE payment_method
 (
     payment_method_code bigint      NOT NULL PRIMARY KEY auto_increment,
@@ -59,6 +68,8 @@ CREATE TABLE customer_order
 );
 
 
+SELECT *
+FROM employee;
 SELECT *
 FROM customer;
 SELECT *

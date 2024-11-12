@@ -4,6 +4,6 @@ window.onload = () => {
     if (alerts) {
         setTimeout(() => {
             alerts.style.display = 'none'
-        }, 3000)
+        }, 500)
     }
 }

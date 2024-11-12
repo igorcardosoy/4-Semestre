@@ -11,7 +11,7 @@
       <jsp:param name="title" value="Assistência Técninca - Home" />
     </jsp:include>
 
-    <script defer src="${pageContext.request.contextPath}/pages/home/script.js"></script>
+
   </head>
 
   <body>
@@ -32,6 +32,10 @@
 
       <div class="text-center mt-5 max-w-6xl flex flex-wrap items-center justify-center gap-5">
           <h1 class="text-3xl">Bem-vindo ao sistema de assistência técnica</h1>
+
+          <div class="card">
+              AAA
+          </div>
       </div>
     </main>
   </body>

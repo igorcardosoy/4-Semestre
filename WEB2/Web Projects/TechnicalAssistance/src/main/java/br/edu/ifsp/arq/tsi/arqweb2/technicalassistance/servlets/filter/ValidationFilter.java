@@ -17,9 +17,9 @@ public class ValidationFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest)request;
         HttpSession session = httpRequest.getSession(false);
-        if(session == null || session.getAttribute("user") == null) {
+        if(session == null || session.getAttribute("employeeCode") == null) {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
-            httpResponse.sendRedirect(httpRequest.getContextPath()+ "/login");
+            httpResponse.sendRedirect(httpRequest.getContextPath()+ "/signin");
         }
         else {
             chain.doFilter(request, response);

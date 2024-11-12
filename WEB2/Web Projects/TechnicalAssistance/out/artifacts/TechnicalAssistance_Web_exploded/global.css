@@ -5,3 +5,7 @@ html, body{
     width: 100svw;
     background-color: oklch(var(--b3));
 }
+
+.title {
+    font-size: 3rem;
+}

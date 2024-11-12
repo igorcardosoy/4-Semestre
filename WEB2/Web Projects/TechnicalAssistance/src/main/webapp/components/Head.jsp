@@ -9,4 +9,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
 
+<script defer src="${pageContext.request.contextPath}/pages/home/script.js"></script>
+
 <title>${param.title}</title>
