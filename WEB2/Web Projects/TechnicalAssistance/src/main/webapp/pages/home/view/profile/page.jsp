@@ -59,10 +59,15 @@
         </label>
 
 
-        <a class="btn btn-primary" href="${pageContext.request.contextPath}/home/edit/profile">
-          Editar
-        </a>
+        <section class="flex gap-3">
+          <a class="btn btn-accent" href="${pageContext.request.contextPath}/home/edit/profile">
+            Editar
+          </a>
 
+          <a class="btn btn-error" href="${pageContext.request.contextPath}/home/delete/profile">
+            Excluir
+          </a>
+        </section>
 
 
   </div>
