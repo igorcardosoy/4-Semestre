@@ -1,128 +1,71 @@
--- Inserindo Aeronaves
-INSERT INTO aeronave (modelo, fabricante, capacidade, status)
-VALUES ('Boeing 737', 'Boeing', 180, 'Em operação');
-
-INSERT INTO aeronave (modelo, fabricante, capacidade, status)
-VALUES ('Airbus A320', 'Airbus', 150, 'Em operação');
-
-INSERT INTO aeronave (modelo, fabricante, capacidade, status)
-VALUES ('Embraer 190', 'Embraer', 100, 'Em operação');
-
-INSERT INTO aeronave (modelo, fabricante, capacidade, status)
-VALUES ('Airbus A350', 'Airbus', 250, 'Em manutenção');
-
-INSERT INTO aeronave (modelo, fabricante, capacidade, status)
-VALUES ('Boeing 777', 'Boeing', 350, 'Em operação');
-
--- Inserindo Passageiros
-INSERT INTO passageiro (nome, cpf, telefone, passaporte)
-VALUES ('João Silva', '12345678901', '1234-5678', 'AB123456');
-
-INSERT INTO passageiro (nome, cpf, telefone, passaporte)
-VALUES ('Maria Oliveira', '10987654321', '9876-5432', 'CD987654');
-
-INSERT INTO passageiro (nome, cpf, telefone, passaporte)
-VALUES ('Carlos Souza', '11223344556', '2233-4455', 'EF112233');
-
-INSERT INTO passageiro (nome, cpf, telefone, passaporte)
-VALUES ('Fernanda Lima', '99887766554', '3344-5566', 'GH998877');
-
-INSERT INTO passageiro (nome, cpf, telefone, passaporte)
-VALUES ('Pedro Almeida', '55667788900', '4455-6677', 'IJ556677');
-
--- Inserindo Funcionários
-INSERT INTO funcionario (nome, cpf, cargo, setor)
-VALUES ('Carlos Souza', '12345678900', 'Piloto', 'Aéreo');
-
-INSERT INTO funcionario (nome, cpf, cargo, setor)
-VALUES ('Fernanda Lima', '98765432100', 'Comissária', 'Aéreo');
-
-INSERT INTO funcionario (nome, cpf, cargo, setor)
-VALUES ('Lucas Pereira', '11223344567', 'Coordenador de voo', 'Aéreo');
-
-INSERT INTO funcionario (nome, cpf, cargo, setor)
-VALUES ('Juliana Costa', '22334455678', 'Piloto', 'Aéreo');
-
-INSERT INTO funcionario (nome, cpf, cargo, setor)
-VALUES ('Ana Beatriz', '33445566789', 'Engenheira de manutenção', 'Manutenção');
-
--- Inserindo Aeroportos
-INSERT INTO aeroporto (nome, cidade, estado, pais)
-VALUES ('Aeroporto Internacional de São Paulo', 'São Paulo', 'SP', 'Brasil');
-
-INSERT INTO aeroporto (nome, cidade, estado, pais)
-VALUES ('Aeroporto de Galeão', 'Rio de Janeiro', 'RJ', 'Brasil');
-
-INSERT INTO aeroporto (nome, cidade, estado, pais)
-VALUES ('Aeroporto de Brasília', 'Brasília', 'DF', 'Brasil');
+ -- Inserts para a tabela de Aeronaves
+INSERT INTO aeronave (modelo, fabricante, capacidade, status) VALUES ('Boeing 737', 'Boeing', 200, 'Ativa');
+INSERT INTO aeronave (modelo, fabricante, capacidade, status) VALUES ('Airbus A320', 'Airbus', 180, 'Inativa');
+INSERT INTO aeronave (modelo, fabricante, capacidade, status) VALUES ('Embraer E195', 'Embraer', 132, 'Ativa');
+INSERT INTO aeronave (modelo, fabricante, capacidade, status) VALUES ('Boeing 747', 'Boeing', 400, 'Inativa');
+INSERT INTO aeronave (modelo, fabricante, capacidade, status) VALUES ('Airbus A380', 'Airbus', 800, 'Ativa');
+INSERT INTO aeronave (modelo, fabricante, capacidade, status) VALUES ('McDonnell Douglas MD-80', 'McDonnell Douglas', 150, 'Inativa');
+INSERT INTO aeronave (modelo, fabricante, capacidade, status) VALUES ('Lockheed L-1011 TriStar', 'Lockheed', 300, 'Inativa');
+INSERT INTO aeronave (modelo, fabricante, capacidade, status) VALUES ('Concorde', 'Aerospatiale/BAC', 120, 'Inativa');
 
 
-INSERT INTO aeroporto (nome, cidade, estado, pais)
-VALUES ('Aeroporto Internacional de Salvador', 'Salvador', 'BA', 'Brasil');
+-- Inserts para a tabela de Passageiros
+INSERT INTO passageiro (nome, cpf, telefone, passaporte) VALUES ('João Silva', '12345678901', '11999999999', 'BR123456');
+INSERT INTO passageiro (nome, cpf, telefone, passaporte) VALUES ('Maria Oliveira', '23456789012', '11988888888', 'BR234567');
+INSERT INTO passageiro (nome, cpf, telefone, passaporte) VALUES ('Carlos Pereira', '34567890123', '11977777777', NULL);
+INSERT INTO passageiro (nome, cpf, telefone, passaporte) VALUES ('Ana Costa', '45678901234', '11966666666', 'BR345678');
+INSERT INTO passageiro (nome, cpf, telefone, passaporte) VALUES ('Lucas Mendes', '56789012345', '11955555555', NULL);
 
-INSERT INTO aeroporto (nome, cidade, estado, pais)
-VALUES ('Aeroporto de Confins', 'Belo Horizonte', 'MG', 'Brasil');
+-- Inserts para a tabela de Funcionários
+INSERT INTO funcionario (nome, cpf, cargo, setor) VALUES ('Paulo Andrade', '67890123456', 'Piloto', 'Operações');
+INSERT INTO funcionario (nome, cpf, cargo, setor) VALUES ('Fernanda Souza', '78901234567', 'Comissário', 'Operações');
+INSERT INTO funcionario (nome, cpf, cargo, setor) VALUES ('Rafael Lima', '89012345678', 'Mecânico', 'Manutenção');
+INSERT INTO funcionario (nome, cpf, cargo, setor) VALUES ('Mariana Ribeiro', '90123456789', 'Supervisor', 'Administração');
+INSERT INTO funcionario (nome, cpf, cargo, setor) VALUES ('Pedro Santos', '01234567890', 'Mecânico', 'Manutenção');
 
--- Inserindo Voos
-INSERT INTO voo (numero_voo, aeronave_id, destino_id, origem_id, data_partida, data_chegada, status)
-VALUES ('AA1234', 1, 2, 1, TO_DATE('2024-11-21 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-11-21 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1);
+-- Inserts para a tabela de Aeroportos
+INSERT INTO aeroporto (nome, cidade, estado, pais) VALUES ('Aeroporto Internacional de Guarulhos', 'São Paulo', 'SP', 'Brasil');
+INSERT INTO aeroporto (nome, cidade, estado, pais) VALUES ('Aeroporto Internacional Tom Jobim', 'Rio de Janeiro', 'RJ', 'Brasil');
+INSERT INTO aeroporto (nome, cidade, estado, pais) VALUES ('JFK International Airport', 'Nova York', 'Nova York', 'EUA');
+INSERT INTO aeroporto (nome, cidade, estado, pais) VALUES ('Heathrow Airport', 'Londres', 'Inglaterra', 'Reino Unido');
+INSERT INTO aeroporto (nome, cidade, estado, pais) VALUES ('Aeroporto Internacional de Brasília', 'Brasília', 'DF', 'Brasil');
 
-INSERT INTO voo (numero_voo, aeronave_id, destino_id, origem_id, data_partida, data_chegada, status)
-VALUES ('BB5678', 2, 1, 2, TO_DATE('2024-11-21 15:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-11-21 17:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1);
+-- Inserts para a tabela de Voos
+INSERT INTO voo (numero_voo, aeronave_id, destino_id, origem_id, data_partida, data_chegada, status) VALUES ('GRU123', 1, 2, 1, TO_DATE('2024-03-10', 'YYYY-MM-DD'), TO_DATE('2024-03-10', 'YYYY-MM-DD'), 1);
+INSERT INTO voo (numero_voo, aeronave_id, destino_id, origem_id, data_partida, data_chegada, status) VALUES ('GIG456', 2, 1, 3, TO_DATE('2024-07-15', 'YYYY-MM-DD'), TO_DATE('2024-07-15', 'YYYY-MM-DD'), 1);
+INSERT INTO voo (numero_voo, aeronave_id, destino_id, origem_id, data_partida, data_chegada, status) VALUES ('NYC789', 4, 3, 1, TO_DATE('2024-05-05', 'YYYY-MM-DD'), TO_DATE('2024-05-05', 'YYYY-MM-DD'), 1);
+INSERT INTO voo (numero_voo, aeronave_id, destino_id, origem_id, data_partida, data_chegada, status) VALUES ('LHR101', 2, 4, 2, TO_DATE('2024-02-20', 'YYYY-MM-DD'), TO_DATE('2024-02-20', 'YYYY-MM-DD'), 1);
+INSERT INTO voo (numero_voo, aeronave_id, destino_id, origem_id, data_partida, data_chegada, status) VALUES ('BSB202', 3, 5, 2, TO_DATE('2024-06-18', 'YYYY-MM-DD'), TO_DATE('2024-06-18', 'YYYY-MM-DD'), 1);
+INSERT INTO voo (numero_voo, aeronave_id, destino_id, origem_id, data_partida, data_chegada, status) 
+VALUES ('MD101', 4, 3, 2, TO_DATE('2024-10-01 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-10-01 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2);
+INSERT INTO voo (numero_voo, aeronave_id, destino_id, origem_id, data_partida, data_chegada, status) 
+VALUES ('LL202', 5, 5, 4, TO_DATE('2024-09-15 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-09-15 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1);
+INSERT INTO voo (numero_voo, aeronave_id, destino_id, origem_id, data_partida, data_chegada, status) 
+VALUES ('CC303', 6, 4, 1, TO_DATE('2024-08-20 06:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-08-20 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 3);
 
-INSERT INTO voo (numero_voo, aeronave_id, destino_id, origem_id, data_partida, data_chegada, status)
-VALUES ('CC9012', 3, 3, 4, TO_DATE('2024-11-22 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-11-22 10:30:00', 'YYYY-MM-DD HH24:MI:SS'), 1);
+-- Inserts para a tabela de Funcionários por Voo
+INSERT INTO funcionario_voo (funcionario_id, voo_id, cargo_funcionario) VALUES (1, 1, 'Piloto');
+INSERT INTO funcionario_voo (funcionario_id, voo_id, cargo_funcionario) VALUES (2, 1, 'Comissário');
+INSERT INTO funcionario_voo (funcionario_id, voo_id, cargo_funcionario) VALUES (1, 2, 'Piloto');
+INSERT INTO funcionario_voo (funcionario_id, voo_id, cargo_funcionario) VALUES (3, 3, 'Mecânico');
+INSERT INTO funcionario_voo (funcionario_id, voo_id, cargo_funcionario) VALUES (4, 5, 'Supervisor');
 
-INSERT INTO voo (numero_voo, aeronave_id, destino_id, origem_id, data_partida, data_chegada, status)
-VALUES ('DD3456', 4, 5, 3, TO_DATE('2024-11-22 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-11-22 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1);
+-- Inserts para a tabela de Passageiros por Voo
+INSERT INTO passageiro_voo (passageiro_id, voo_id, assento, status_voo) VALUES (1, 1, '12A', 'Confirmado');
+INSERT INTO passageiro_voo (passageiro_id, voo_id, assento, status_voo) VALUES (2, 1, '12B', 'Confirmado');
+INSERT INTO passageiro_voo (passageiro_id, voo_id, assento, status_voo) VALUES (3, 2, '14C', 'Confirmado');
+INSERT INTO passageiro_voo (passageiro_id, voo_id, assento, status_voo) VALUES (4, 3, '15D', 'Confirmado');
+INSERT INTO passageiro_voo (passageiro_id, voo_id, assento, status_voo) VALUES (5, 4, '16E', 'Confirmado');
 
-INSERT INTO voo (numero_voo, aeronave_id, destino_id, origem_id, data_partida, data_chegada, status)
-VALUES ('EE7890', 5, 4, 5, TO_DATE('2024-11-23 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-11-23 11:30:00', 'YYYY-MM-DD HH24:MI:SS'), 1);
-
--- Inserindo Funcionários por Voo
-INSERT INTO funcionario_voo (funcionario_id, voo_id, cargo_funcionario)
-VALUES (1, 1, 'Piloto');
-
-INSERT INTO funcionario_voo (funcionario_id, voo_id, cargo_funcionario)
-VALUES (2, 1, 'Comissária');
-
-INSERT INTO funcionario_voo (funcionario_id, voo_id, cargo_funcionario)
-VALUES (3, 2, 'Coordenador de voo');
-
-INSERT INTO funcionario_voo (funcionario_id, voo_id, cargo_funcionario)
-VALUES (4, 3, 'Piloto');
-
-INSERT INTO funcionario_voo (funcionario_id, voo_id, cargo_funcionario)
-VALUES (5, 4, 'Engenheira de manutenção');
-
--- Inserindo Passageiros por Voo
-INSERT INTO passageiro_voo (passageiro_id, voo_id, assento, status_voo)
-VALUES (1, 1, '12A', 'Confirmado');
-
-INSERT INTO passageiro_voo (passageiro_id, voo_id, assento, status_voo)
-VALUES (2, 2, '15B', 'Aguardando');
-
-INSERT INTO passageiro_voo (passageiro_id, voo_id, assento, status_voo)
-VALUES (3, 3, '10C', 'Confirmado');
-
-INSERT INTO passageiro_voo (passageiro_id, voo_id, assento, status_voo)
-VALUES (4, 4, '8D', 'Cancelado');
-
-INSERT INTO passageiro_voo (passageiro_id, voo_id, assento, status_voo)
-VALUES (5, 5, '5E', 'Confirmado');
-
--- Inserindo Manutenções
-INSERT INTO manutencao (aeronave_id, funcionario_id, data_manutencao, descricao, custo)
-VALUES (1, 1, TO_DATE('2024-11-10', 'YYYY-MM-DD'), 'Troca de pneus', 5000);
-
-INSERT INTO manutencao (aeronave_id, funcionario_id, data_manutencao, descricao, custo)
-VALUES (2, 2, TO_DATE('2024-11-15', 'YYYY-MM-DD'), 'Revisão de motor', 10000);
-
-INSERT INTO manutencao (aeronave_id, funcionario_id, data_manutencao, descricao, custo)
-VALUES (3, 3, TO_DATE('2024-11-18', 'YYYY-MM-DD'), 'Inspeção de fuselagem', 7000);
-
-INSERT INTO manutencao (aeronave_id, funcionario_id, data_manutencao, descricao, custo)
-VALUES (4, 4, TO_DATE('2024-11-20', 'YYYY-MM-DD'), 'Troca de óleo', 3000);
-
-INSERT INTO manutencao (aeronave_id, funcionario_id, data_manutencao, descricao, custo)
-VALUES (5, 5, TO_DATE('2024-11-22', 'YYYY-MM-DD'), 'Calibração de instrumentos', 2000);
+-- Inserts para a tabela de Manutenção
+INSERT INTO manutencao (aeronave_id, funcionario_id, data_manutencao, descricao, custo) VALUES (2, 3, TO_DATE('2024-01-15', 'YYYY-MM-DD'), 'Troca de turbinas', 50000);
+INSERT INTO manutencao (aeronave_id, funcionario_id, data_manutencao, descricao, custo) VALUES (4, 5, TO_DATE('2024-03-20', 'YYYY-MM-DD'), 'Revisão geral', 30000);
+INSERT INTO manutencao (aeronave_id, funcionario_id, data_manutencao, descricao, custo) VALUES (2, 3, TO_DATE('2024-06-10', 'YYYY-MM-DD'), 'Inspeção de segurança', 20000);
+INSERT INTO manutencao (aeronave_id, funcionario_id, data_manutencao, descricao, custo) VALUES (4, 5, TO_DATE('2024-08-15', 'YYYY-MM-DD'), 'Troca de pneus', 10000);
+INSERT INTO manutencao (aeronave_id, funcionario_id, data_manutencao, descricao, custo) VALUES (3, 3, TO_DATE('2024-09-25', 'YYYY-MM-DD'), 'Substituição de bateria', 15000);
+INSERT INTO manutencao (aeronave_id, funcionario_id, data_manutencao, descricao, custo) 
+VALUES (4, 1, TO_DATE('2024-11-10', 'YYYY-MM-DD'), 'Substituição de componentes hidráulicos', 4500);
+INSERT INTO manutencao (aeronave_id, funcionario_id, data_manutencao, descricao, custo) 
+VALUES (5, 2, TO_DATE('2024-10-20', 'YYYY-MM-DD'), 'Inspeção completa do sistema elétrico', 7000);
+INSERT INTO manutencao (aeronave_id, funcionario_id, data_manutencao, descricao, custo) 
+VALUES (6, 3, TO_DATE('2024-09-05', 'YYYY-MM-DD'), 'Revisão estrutural e troca de pneus', 6000);
