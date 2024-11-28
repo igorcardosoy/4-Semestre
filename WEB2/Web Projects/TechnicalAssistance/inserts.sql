@@ -1,3 +1,5 @@
+USE technical_assistance;
+
 INSERT INTO address (street, number, complement, neighborhood, city, state, zipcode)
 VALUES ('Av. Paulista', '1000', 'Apt 101', 'Bela Vista', 'São Paulo', 'SP', '01311-000');
 INSERT INTO address (street, number, complement, neighborhood, city, state, zipcode)

@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" build-on-make="true" name="TechnicalAssistance:Web exploded">
+  <artifact type="exploded-war" name="TechnicalAssistance:Web exploded">
     <output-path>$PROJECT_DIR$/out/artifacts/TechnicalAssistance_Web_exploded</output-path>
     <root id="root">
       <element id="javaee-facet-resources" facet="TechnicalAssistance/web/Web" />
